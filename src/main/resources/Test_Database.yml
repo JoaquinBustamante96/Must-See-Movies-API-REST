@@ -1,0 +1,29 @@
+movieList:
+  - id: asd
+    name: ['string1', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: asd
+    director: ['string1', 'string2']
+    country: asd
+    lenguage: asd
+    releaseDate: asd
+    runtime: 123
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
+  - id: asdds
+    name: ['string1', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: asd
+    director: ['string1', 'string2']
+    country: asd
+    lenguage: asd
+    releaseDate: asdas
+    runtime: 412312
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
