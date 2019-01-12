@@ -4,6 +4,7 @@ import com.first.demoMongo.businessControllers.MoviesController;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
+import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class movieResorce {
     }
 
     @GetMapping(value = MOVIE+NAME)
-    public List<Movie> getMoviesByName(@PathVariable String name) throws NotFoundException{
+    public List<MovieOutputDto> getMoviesByName(@PathVariable String name) throws NotFoundException{
         return this.moviesController.getMoviesByName(name);
     }
 

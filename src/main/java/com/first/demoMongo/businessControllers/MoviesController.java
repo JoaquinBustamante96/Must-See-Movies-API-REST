@@ -3,6 +3,7 @@ package com.first.demoMongo.businessControllers;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
+import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class MoviesController {
        Page<Movie> movies = this.movieRepository.findAll(PageRequest.of(page,size,dir,key));
        return movies;
     }
-    public List<Movie> getMoviesByName(String name) throws NotFoundException{
-        List<Movie> movies = this.movieRepository.findBynameContaining(name).orElseThrow(() -> new NotFoundException("No Film Found With The Given name:"+name));
+    public List<MovieOutputDto> getMoviesByName(String name) throws NotFoundException{
+        List<MovieOutputDto> movies = this.movieRepository.findBynameContaining(name).orElseThrow(() -> new NotFoundException("No Film Found With The Given name:"+name));
 
         return movies;
     }
@@ -34,7 +35,7 @@ public class MoviesController {
         int page = 0;
         int size = 5;
       List<String[]> names =  new ArrayList<>();
-      this.movieRepository.findByname(name, PageRequest.of(page,size))
+      this.movieRepository.findBynameContaining(name, PageRequest.of(page,size))
                .ifPresent(movies-> movies.forEach(
                        movie -> names.add(movie.getName())
                        )

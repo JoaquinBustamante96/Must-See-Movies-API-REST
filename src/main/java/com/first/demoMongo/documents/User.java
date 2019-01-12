@@ -128,6 +128,14 @@ public class User {
         this.token = token;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
     @Override
     public int hashCode() {
         return this.id.hashCode();
