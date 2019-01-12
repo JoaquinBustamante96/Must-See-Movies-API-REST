@@ -24,7 +24,7 @@ public class UserIT {
         String username= "usernameTest";
         User user = this.userRepository.findByusername(username);
         assertNotNull(user);
-        assertTrue(user.getUsername().equals(user));
+        assertEquals(user.getUsername(), username);
     }
 
     @Test
@@ -33,6 +33,14 @@ public class UserIT {
         User user = this.userRepository.findBydni(dni);
         assertNotNull(user);
         assertEquals(user.getDni(),dni);
+    }
+
+    @Test
+    public void findByemail(){
+        String email = "email@prueba.com";
+        User user = this.userRepository.findByemail(email);
+        assertNotNull(user);
+        assertEquals(user.getEmail(),email);
     }
 
 }

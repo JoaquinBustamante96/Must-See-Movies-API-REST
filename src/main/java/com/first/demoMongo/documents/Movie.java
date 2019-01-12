@@ -22,7 +22,7 @@ public class Movie {
     private String country;
     private String lenguage;
     @Indexed
-    private String releaseDate;//dd/mm/yyyy
+    private String releaseDate;//dd-mm-yyyy
     private int runtime;
     @Indexed
     private Boolean color;

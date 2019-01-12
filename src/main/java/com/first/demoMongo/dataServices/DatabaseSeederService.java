@@ -51,8 +51,14 @@ public class DatabaseSeederService {
         }
     }
 
+    public void resetDB(){
+        this.deleteAll();
+        this.initializeDB();
+    }
+
     public void deleteAll(){
         this.movieRepository.deleteAll();
+        this.userRepository.deleteAll();
     }
 
 }
