@@ -1,5 +1,5 @@
 movieList:
-  - id: asd
+  - id: 0001
     name: ['prueba', 'string2']
     artMovement: asd
     genre: ['string1', 'string2']
@@ -13,16 +13,16 @@ movieList:
     sound: True
     trailer: asd
     poster: asd
-  - id: asdds
-    name: ['string1', 'string2']
-    artMovement: asd
-    genre: ['string1', 'string2']
-    storyline: asd
-    director: ['string1', 'string2']
-    country: asd
-    lenguage: asd
-    releaseDate: asdas
-    runtime: 412312
+  - id: 0002
+    name: ['name1', 'name2']
+    artMovement: artmovementT
+    genre: ['genre1', 'genre2']
+    storyline: storylineT
+    director: ['director1', 'director2']
+    country: countryT
+    lenguage: lenguageT
+    releaseDate: 0001-01-01
+    runtime: 14
     color: True
     sound: True
     trailer: asd

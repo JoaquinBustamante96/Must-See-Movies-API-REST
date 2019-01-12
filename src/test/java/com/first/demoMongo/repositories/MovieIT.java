@@ -23,7 +23,7 @@ import java.util.Optional;
 public class MovieIT {
 
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
 
     @Test
     public void testfindBynameContaining(){
