@@ -14,8 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,6 +53,16 @@ public class MoviesControllerIT {
     @Test
     public void updateMovie() throws NotFoundException{
         this.moviesController.updateMovie("0001",this.movieInputDto);
+    }
+
+    @Test
+    public void getByName() throws NotFoundException{
+        String name = "prueba";
+        List<String[]> moviesNames = this.moviesController.getByName(name);
+        assertTrue(moviesNames.size()<6);
+        for (String[] names: moviesNames) {
+            assertTrue(Arrays.toString(names).toLowerCase().contains(name));
+        }
     }
 
     @After
