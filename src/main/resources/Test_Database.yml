@@ -1,6 +1,6 @@
 movieList:
   - id: asd
-    name: ['string1', 'string2']
+    name: ['prueba', 'string2']
     artMovement: asd
     genre: ['string1', 'string2']
     storyline: asd
@@ -27,3 +27,12 @@ movieList:
     sound: True
     trailer: asd
     poster: asd
+userList:
+  - id: 0001;
+    username: usernameTest
+    password: passwordTest
+    active: True
+    email: email@prueba.com
+    dni: 33333
+    roles:
+        - ADMIN

@@ -14,14 +14,9 @@ public interface MovieRepository extends MongoRepository<Movie,String> {
      List<MovieOutputDto> findBygenre(String gnere);
 
      @Query("{'$or':[ {'name':{$regex:?0,$options:'i'}}] }")
-     List<MovieOutputDto> findByname(String name);
+     Optional<List<MovieMinimunOutputDto>> findBynameContaining(String name, Pageable pageable);
 
      @Query("{'$or':[ {'name':{$regex:?0,$options:'i'}}] }")
-     Optional<List<MovieMinimunOutputDto>> findByname(String name, Pageable pageable);
-
-     @Query("{'$or':[ {'name':{$regex:?0,$options:'i'}}] }")
-     Optional<List<Movie>> findBynameContaining(String name);
-
-     Optional<List<MovieMinimunOutputDto>> findBydirectorContaining(String director, Pageable pageable);
-
+     Optional<List<MovieOutputDto>> findBynameContaining(String name);
+     
 }
