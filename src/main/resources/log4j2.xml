@@ -5,8 +5,8 @@
 			<PatternLayout
 				pattern="[%-5level] %d{dd/MMM HH:mm:ss} %-30.30c{2} --> %msg%n" />
 		</Console>
-		<RollingFile name="RollingFile" fileName="${logs.path}/miw.log"
-			filePattern="${logs.path}/miw.JavaWeb-%d{yyyy-MM-dd.HH}-%i.log">
+		<RollingFile name="RollingFile" fileName="${logs.path}"
+			filePattern="${logs.path}/JavaWeb-%d{yyyy-MM-dd.HH}-%i.log">
 			<PatternLayout>
 				<pattern>[%-5level] %d{dd-MMM HH:mm:ss} %-30.30c{2} --> %msg%n
 				</pattern>

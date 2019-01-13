@@ -47,7 +47,6 @@ public class MoviesController {
     }
 
     public MovieMinimunOutputDto createMovie(MovieInputDto movieDto){
-
         Movie movie = new Movie(movieDto.getName(),movieDto.getGenre(),
                 movieDto.getStoryline(),movieDto.getArtMovement(),
                 movieDto.getDirector(),movieDto.getCountry(),
@@ -56,7 +55,6 @@ public class MoviesController {
                 movieDto.getTrailer(),"");
 
         this.movieRepository.save(movie);
-
         MovieMinimunOutputDto movieMinimunOutputDto = new MovieMinimunOutputDto(movie);
 
         return movieMinimunOutputDto;
