@@ -1,8 +1,13 @@
 package com.first.demoMongo.documents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Document
 public class Movie {
@@ -11,34 +16,29 @@ public class Movie {
     private String id;
     @Indexed
     private String[] name;
-    @Indexed
     private String artMovement;
-    @Indexed
     private String[] genre;
     private String storyline;
-    @Indexed
     private String[] director;
-    @Indexed
     private String country;
     private String lenguage;
-    @Indexed
-    private String releaseDate;//dd-mm-yyyy
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate releaseDate;
     private int runtime;
-    @Indexed
     private Boolean color;
-    @Indexed
     private Boolean sound;
     private String trailer;
     private String poster;
 
-    public Movie(){}
+    public Movie() {
+    }
 
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
-                 String[] director, String country, String lenguage, String releaseDate,
+                 String[] director, String country, String lenguage, LocalDate releaseDate,
                  int runtime, Boolean color, Boolean sound, String trailer, String poster) {
         this.name = name;
         this.genre = genre;
-        this.artMovement=artMovement;
+        this.artMovement = artMovement;
         this.storyline = storyline;
         this.director = director;
         this.country = country;
@@ -54,6 +54,7 @@ public class Movie {
     public void setArtMovement(String artMovement) {
         this.artMovement = artMovement;
     }
+
     public String getId() {
         return id;
     }
@@ -86,7 +87,7 @@ public class Movie {
         this.lenguage = lenguage;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -138,7 +139,7 @@ public class Movie {
         return lenguage;
     }
 
-    public String getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
@@ -166,11 +167,10 @@ public class Movie {
         return this.id.hashCode();
     }
 
-    public boolean equals(String id){
-        if(this.id.equals(id)){
+    public boolean equals(String id) {
+        if (this.id.equals(id)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
