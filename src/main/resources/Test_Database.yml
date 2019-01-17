@@ -25,6 +25,19 @@ movieList:
     sound: True
     trailer: asd
     poster: asd
+  - id: 0003
+    name: ['prueba', 'name2']
+    artMovement: artmovementT
+    genre: ['genre1', 'genre2']
+    storyline: storylineT
+    director: ['director1', 'director2']
+    country: countryT
+    lenguage: lenguageT
+    runtime: 150
+    color: True
+    sound: True
+    trailer: trailer
+    poster: poster
 userList:
   - id: 0001;
     username: usernameTest
@@ -34,3 +47,4 @@ userList:
     dni: 33333
     roles:
         - ADMIN
+        - USER

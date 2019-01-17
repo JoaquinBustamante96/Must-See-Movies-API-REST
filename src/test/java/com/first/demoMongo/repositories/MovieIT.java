@@ -4,9 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +21,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 public class MovieIT {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private DatabaseSeederService databaseSeederService;
 
     @Test
     public void testfindBynameContaining(){
@@ -49,18 +56,38 @@ public class MovieIT {
     }
 
     @Test
-    public void save(){
-        String[] array = new String[]{"first","second"};
-        Movie movie = new Movie(array,array,"asdsad", "artmovement", array,
-                "storyline", "country", LocalDate.of(1982,3,5),
-                14, true, true, "trailer","poster");
+    public void findByFilters(){
+
+        Movie movie = this.movieRepository.findById("0003").get();
+        movie.setReleaseDate(LocalDate.of(1970,02,02));
         this.movieRepository.save(movie);
+
+        String name = "prueba";
+        String artMovement = "artmovement";
+        String genre = "genre";
+        String country = "country";
+        String lenguage = "lenguage";
+        int minRuntime = 100;
+        int maxRuntime = 200;
+        boolean color = true;
+        boolean sound = true;
+        LocalDate startDate = LocalDate.of(1960,2,3);
+        LocalDate endDate = LocalDate.of(2600,2,3);
+
+        Optional<List<MovieMinimunOutputDto>> moviesOptional = this.movieRepository.findByfilters(
+                name,artMovement,genre,country,lenguage,minRuntime,maxRuntime,color,sound,startDate,endDate);
+
+        moviesOptional.ifPresent(movieList -> {
+                    movieList.forEach( MovieMinimunOutputDto -> {
+                        assertTrue(Arrays.toString(MovieMinimunOutputDto.getName()).contains(name));
+                            }
+                    );
+                });
     }
 
-    @Test
-    public void get(){
-        List<Movie> movie = this.movieRepository.findDate(LocalDate.of(1980,3,5),LocalDate.of(1990,3,5));
-        System.out.println(movie.get(0).getReleaseDate().toString());
+    @After
+    public void resetDB(){
+        this.databaseSeederService.resetDB();
     }
 
 }

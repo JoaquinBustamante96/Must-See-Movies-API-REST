@@ -18,10 +18,23 @@ public interface MovieRepository extends MongoRepository<Movie,String> {
      @Query("{'name':{$regex:?0,$options:'i'}}")
      Optional<List<MovieOutputDto>> findBynameContaining(String name);
 
-     @Query("{'releaseDate':{$dateFromString: {dateString: ?0,format: '%Y-%m-%d' }}}")
-     Optional<List<MovieMinimunOutputDto>> findBydate(String date);
-
      @Query("{'releaseDate': { $gte : ?0, $lt : ?1}}")
      List<Movie> findDate(LocalDate start, LocalDate end);
+
+     @Query("{$and:[{'name':{$regex:?0,$options:'i'}}," +
+             "{'artMovement':{$regex:?1,$options:'i'}}," +
+             "{'genre':{$regex:?2,$options:'i'}}," +
+             "{'country':{$regex:?3,$options:'i'}}," +
+             "{'lenguage':{$regex:?4,$options:'i'}}," +
+             "{'runtime':{ $gt: ?5, $lt : ?6 }}," +
+             "{'color':?7},"+
+             "{'sound':?8}," +
+             "{'releaseDate':{ $gte : ?9, $lt : ?10} }]}")
+     Optional<List<MovieMinimunOutputDto>> findByfilters(String name,String artMovement,
+                                                  String genre,String country,
+                                                  String lenguage,int minRuntime,
+                                                  int maxRuntime, boolean color,
+                                                  boolean sound, LocalDate startDate,
+                                                  LocalDate endDate);
 
 }

@@ -37,11 +37,13 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         this.color = color;
         this.sound = sound;
     }
+
     public MovieOutputDto(Movie movie){
         this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getGenre(),movie.getArtMovement(),
                 movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLenguage(),
                 movie.getRuntime(),movie.getColor(),movie.getSound());
     }
+
     public void setGenre(String genre) {
         this.genre = genre;
     }

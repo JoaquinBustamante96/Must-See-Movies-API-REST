@@ -22,6 +22,7 @@ public class MovieMinimunOutputDto {
     public MovieMinimunOutputDto(String id, String[] name, LocalDate releaseDate) {
         this.id = id;
         this.name = name;
+        this.releaseDate = releaseDate;
     }
 
     public MovieMinimunOutputDto(Movie movie){
