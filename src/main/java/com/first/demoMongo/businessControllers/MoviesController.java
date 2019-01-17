@@ -19,16 +19,14 @@ import java.util.List;
 public class MoviesController {
 
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
 
     public Page<Movie> getPage(int page, int size, String key,Sort.Direction dir){
-       Page<Movie> movies = this.movieRepository.findAll(PageRequest.of(page,size,dir,key));
-       return movies;
+       return this.movieRepository.findAll(PageRequest.of(page,size,dir,key));
     }
-    public List<MovieOutputDto> getMoviesByName(String name) throws NotFoundException{
-        List<MovieOutputDto> movies = this.movieRepository.findBynameContaining(name).orElseThrow(() -> new NotFoundException("No Film Found With The Given name:"+name));
 
-        return movies;
+    public List<MovieOutputDto> getMoviesByName(String name) throws NotFoundException{
+        return this.movieRepository.findBynameContaining(name).orElseThrow(() -> new NotFoundException("No Film Found With The Given name:"+name));
     }
 
     public List<String[]> getByName(String name) throws NotFoundException{
@@ -55,10 +53,10 @@ public class MoviesController {
                 movieDto.getTrailer(),"");
 
         this.movieRepository.save(movie);
-        MovieMinimunOutputDto movieMinimunOutputDto = new MovieMinimunOutputDto(movie);
 
-        return movieMinimunOutputDto;
+        return new MovieMinimunOutputDto(movie);
     }
+
     public void updatePoster(String id,String poster) throws  NotFoundException{
        Movie movie = movieRepository.findById(id).orElseThrow(() -> new NotFoundException("No Film Found With The Given ID:"+id));
        movie.setPoster(poster);
@@ -71,7 +69,7 @@ public class MoviesController {
         movie.setName(movieInputDto.getName());
         movie.setDirector(movieInputDto.getDirector());
         movie.setStoryline(movieInputDto.getStoryline());
-        movie.setArtMovement(movieInputDto.getStoryline());
+        movie.setArtMovement(movieInputDto.getArtMovement());
         movie.setColor(movieInputDto.getColor());
         movie.setSound(movieInputDto.getSound());
         movie.setCountry(movieInputDto.getCountry());
@@ -83,6 +81,7 @@ public class MoviesController {
 
         movieRepository.save(movie);
     }
+
     public void deleteMovie(String id){
         movieRepository.deleteById(id);
     }

@@ -1,6 +1,5 @@
 package com.first.demoMongo.repositories;
 
-import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;

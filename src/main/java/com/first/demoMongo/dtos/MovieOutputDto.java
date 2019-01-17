@@ -3,6 +3,7 @@ package com.first.demoMongo.dtos;
 import com.first.demoMongo.documents.Movie;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @NotNull
 @NotEmpty
@@ -24,7 +25,7 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         // Empty for framework
     }
 
-    public MovieOutputDto(String id, String[] name, String releaseDate, String[] artMovement, String genre, String storyline, String[] director, String country, String lenguage, int durationInMin, Boolean color, Boolean sound) {
+    public MovieOutputDto(String id, String[] name, LocalDate releaseDate, String[] artMovement, String genre, String storyline, String[] director, String country, String lenguage, int durationInMin, Boolean color, Boolean sound) {
         super(id, name, releaseDate);
         this.genre = genre;
         this.artMovement=artMovement;
@@ -36,11 +37,13 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         this.color = color;
         this.sound = sound;
     }
+
     public MovieOutputDto(Movie movie){
         this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getGenre(),movie.getArtMovement(),
                 movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLenguage(),
                 movie.getRuntime(),movie.getColor(),movie.getSound());
     }
+
     public void setGenre(String genre) {
         this.genre = genre;
     }

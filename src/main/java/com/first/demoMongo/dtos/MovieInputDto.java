@@ -1,7 +1,10 @@
 package com.first.demoMongo.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class MovieInputDto {
@@ -9,7 +12,8 @@ public class MovieInputDto {
     @NotNull @NotEmpty
     private String[] name;
     @NotNull @NotEmpty
-    private String releaseDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate releaseDate;
     @NotNull @NotEmpty
     private String artMovement;
     @NotNull @NotEmpty
@@ -31,12 +35,11 @@ public class MovieInputDto {
     private String trailer;
     private String poster;
 
-
     public MovieInputDto(){
         //empty for framework
     }
 
-    public MovieInputDto(String[] name, String releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String lenguage,
+    public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String lenguage,
                          int runtime, Boolean color, Boolean sound, String trailer,String poster) {
         this.name=name;
         this.releaseDate=releaseDate;
@@ -69,7 +72,7 @@ public class MovieInputDto {
         this.name = name;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -110,7 +113,7 @@ public class MovieInputDto {
         return name;
     }
 
-    public String getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
@@ -162,7 +165,7 @@ public class MovieInputDto {
     public String toString() {
         return "MovieInputDto{" +
                 "name='" + Arrays.toString(name)+ '\'' +
-                ", releaseDate='" + releaseDate + '\'' +
+                ", releaseDate='" + releaseDate.toString() + '\'' +
                 ", artMovement='" + artMovement + '\'' +
                 ", genre=" + Arrays.toString(genre) +
                 ", storyline='" + storyline + '\'' +
