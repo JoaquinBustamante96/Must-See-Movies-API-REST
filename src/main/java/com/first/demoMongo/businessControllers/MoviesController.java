@@ -4,8 +4,10 @@ import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +29,7 @@ public class MoviesController {
 
     public List<MovieOutputDto> getMoviesByName(String name) throws NotFoundException{
         return this.movieRepository.findBynameContaining(name).orElseThrow(() -> new NotFoundException("No Film Found With The Given name:"+name));
-    }
+}
 
     public List<String[]> getByName(String name) throws NotFoundException{
         int page = 0;
@@ -44,11 +46,19 @@ public class MoviesController {
        return names;
     }
 
+    public List<MovieMinimunOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto) throws NotFoundException{
+
+        return this.movieRepository.findByfilters(queryMovieInputDto.getName(),queryMovieInputDto.getArtMovement(),queryMovieInputDto.getGenre(),
+                queryMovieInputDto.getCountry(),queryMovieInputDto.getLanguage(),queryMovieInputDto.getMinRuntime(),queryMovieInputDto.getMaxRuntime(),
+                queryMovieInputDto.getColor(),queryMovieInputDto.getSound(),queryMovieInputDto.getStartDate(),queryMovieInputDto.getEndDate())
+                .orElseThrow( ()-> new NotFoundException("No movie found by the given filters"));
+    }
+
     public MovieMinimunOutputDto createMovie(MovieInputDto movieDto){
         Movie movie = new Movie(movieDto.getName(),movieDto.getGenre(),
                 movieDto.getStoryline(),movieDto.getArtMovement(),
                 movieDto.getDirector(),movieDto.getCountry(),
-                movieDto.getLenguage(),movieDto.getReleaseDate()
+                movieDto.getLanguage(),movieDto.getReleaseDate()
                 ,movieDto.getRuntime(),movieDto.getColor(),movieDto.getSound(),
                 movieDto.getTrailer(),"");
 
@@ -74,7 +84,7 @@ public class MoviesController {
         movie.setSound(movieInputDto.getSound());
         movie.setCountry(movieInputDto.getCountry());
         movie.setGenre(movieInputDto.getGenre());
-        movie.setLenguage(movieInputDto.getLenguage());
+        movie.setLanguage(movieInputDto.getLanguage());
         movie.setRuntime(movieInputDto.getRuntime());
         movie.setReleaseDate(movieInputDto.getReleaseDate());
         movie.setTrailer(movieInputDto.getTrailer());

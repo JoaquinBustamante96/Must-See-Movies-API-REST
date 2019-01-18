@@ -14,7 +14,7 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
     private String[] artMovement;
     private String[] director;
     private String country;
-    private String lenguage;
+    private String language;
     private int runtime;
     private Boolean color;
     private Boolean sound;
@@ -25,14 +25,14 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         // Empty for framework
     }
 
-    public MovieOutputDto(String id, String[] name, LocalDate releaseDate, String[] artMovement, String genre, String storyline, String[] director, String country, String lenguage, int durationInMin, Boolean color, Boolean sound) {
+    public MovieOutputDto(String id, String[] name, LocalDate releaseDate, String[] artMovement, String genre, String storyline, String[] director, String country, String language, int durationInMin, Boolean color, Boolean sound) {
         super(id, name, releaseDate);
         this.genre = genre;
         this.artMovement=artMovement;
         this.storyline = storyline;
         this.director = director;
         this.country = country;
-        this.lenguage = lenguage;
+        this.language = language;
         this.runtime = durationInMin;
         this.color = color;
         this.sound = sound;
@@ -40,7 +40,7 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
 
     public MovieOutputDto(Movie movie){
         this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getGenre(),movie.getArtMovement(),
-                movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLenguage(),
+                movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLanguage(),
                 movie.getRuntime(),movie.getColor(),movie.getSound());
     }
 
@@ -64,8 +64,8 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         this.country = country;
     }
 
-    public void setLenguage(String lenguage) {
-        this.lenguage = lenguage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public void setDurationInMin(int durationInMin) {
@@ -107,8 +107,8 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         return country;
     }
 
-    public String getLenguage() {
-        return lenguage;
+    public String getLanguage() {
+        return language;
     }
 
     public int getDurationInMin() {

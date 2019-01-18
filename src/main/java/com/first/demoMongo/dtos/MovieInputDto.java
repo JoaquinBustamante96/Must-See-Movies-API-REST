@@ -25,7 +25,7 @@ public class MovieInputDto {
     @NotNull @NotEmpty
     private String country;
     @NotNull @NotEmpty
-    private String lenguage;
+    private String language;
     @NotNull @NotEmpty
     private int runtime;
     @NotNull @NotEmpty
@@ -39,7 +39,7 @@ public class MovieInputDto {
         //empty for framework
     }
 
-    public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String lenguage,
+    public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String language,
                          int runtime, Boolean color, Boolean sound, String trailer,String poster) {
         this.name=name;
         this.releaseDate=releaseDate;
@@ -48,7 +48,7 @@ public class MovieInputDto {
         this.storyline = storyline;
         this.director = director;
         this.country = country;
-        this.lenguage = lenguage;
+        this.language = language;
         this.runtime = runtime;
         this.color = color;
         this.sound = sound;
@@ -88,8 +88,8 @@ public class MovieInputDto {
         this.country = country;
     }
 
-    public void setLenguage(String lenguage) {
-        this.lenguage = lenguage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public void setRuntime(int runtime) {
@@ -133,8 +133,8 @@ public class MovieInputDto {
         return country;
     }
 
-    public String getLenguage() {
-        return lenguage;
+    public String getLanguage() {
+        return language;
     }
 
     public int getRuntime() {
@@ -171,7 +171,7 @@ public class MovieInputDto {
                 ", storyline='" + storyline + '\'' +
                 ", director=" + Arrays.toString(director) +
                 ", country=" + country +
-                ", lenguage='" + lenguage + '\'' +
+                ", language='" + language + '\'' +
                 ", runtime=" + runtime +
                 ", color=" + color +
                 ", sound=" + sound +

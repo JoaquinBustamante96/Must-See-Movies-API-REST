@@ -5,6 +5,7 @@ import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ public class movieResorce {
                 .orElseThrow(()-> new BadRequestException("Dir not Allowed: "+dir+" allowed dir are asc or desc"));
 
         return this.moviesController.getPage(page,size,key,direction);
+    }
+
+    @GetMapping(MOVIE)
+    public List<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto) throws NotFoundException{
+        return this.moviesController.getMoviesByQueryDto(queryMovieInputDto);
     }
 
     @GetMapping(value = NAME)

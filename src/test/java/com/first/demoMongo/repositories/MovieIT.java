@@ -66,16 +66,16 @@ public class MovieIT {
         String artMovement = "artmovement";
         String genre = "genre";
         String country = "country";
-        String lenguage = "lenguage";
+        String language = "language";
         int minRuntime = 100;
         int maxRuntime = 200;
-        boolean color = true;
-        boolean sound = true;
+        String color = "true";
+        String sound = "true";
         LocalDate startDate = LocalDate.of(1960,2,3);
         LocalDate endDate = LocalDate.of(2600,2,3);
 
         Optional<List<MovieMinimunOutputDto>> moviesOptional = this.movieRepository.findByfilters(
-                name,artMovement,genre,country,lenguage,minRuntime,maxRuntime,color,sound,startDate,endDate);
+                name,artMovement,genre,country,language,minRuntime,maxRuntime,color,sound,startDate,endDate);
 
         moviesOptional.ifPresent(movieList -> {
                     movieList.forEach( MovieMinimunOutputDto -> {

@@ -25,16 +25,16 @@ public interface MovieRepository extends MongoRepository<Movie,String> {
              "{'artMovement':{$regex:?1,$options:'i'}}," +
              "{'genre':{$regex:?2,$options:'i'}}," +
              "{'country':{$regex:?3,$options:'i'}}," +
-             "{'lenguage':{$regex:?4,$options:'i'}}," +
+             "{'language':{$regex:?4,$options:'i'}}," +
              "{'runtime':{ $gt: ?5, $lt : ?6 }}," +
-             "{'color':?7},"+
-             "{'sound':?8}," +
+             "{'color':{$regex:?7,$options:'i'}},"+
+             "{'sound':{$regex:?8,$options:'i'}}," +
              "{'releaseDate':{ $gte : ?9, $lt : ?10} }]}")
      Optional<List<MovieMinimunOutputDto>> findByfilters(String name,String artMovement,
                                                   String genre,String country,
-                                                  String lenguage,int minRuntime,
-                                                  int maxRuntime, boolean color,
-                                                  boolean sound, LocalDate startDate,
+                                                  String language,int minRuntime,
+                                                  int maxRuntime, String color,
+                                                  String sound, LocalDate startDate,
                                                   LocalDate endDate);
 
 }

@@ -5,10 +5,10 @@ import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.validation.constraints.AssertTrue;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +68,7 @@ public class MoviesControllerIT {
         assertEquals(movie.getReleaseDate(),this.movieInputDto.getReleaseDate());
         assertEquals(movie.getArtMovement(),this.movieInputDto.getArtMovement());
         assertEquals(movie.getCountry(),this.movieInputDto.getCountry());
-        assertEquals(movie.getLenguage(),this.movieInputDto.getLenguage());
+        assertEquals(movie.getLanguage(),this.movieInputDto.getLanguage());
         assertEquals(movie.getStoryline(),this.movieInputDto.getStoryline());
         assertEquals(movie.getColor(),this.movieInputDto.getColor());
         assertEquals(movie.getSound(),this.movieInputDto.getSound());
@@ -87,6 +88,38 @@ public class MoviesControllerIT {
             assertTrue(Arrays.toString(MovieOutputDto.getName()).contains(name));
         });
     }
+
+    @Test
+    public void getMoviesByQueryDto() throws NotFoundException{
+        Movie movie = this.movieRepository.findById("0003").get();
+        LocalDate date = LocalDate.of(1970,02,02);
+        movie.setReleaseDate(date);
+        this.movieRepository.save(movie);
+
+        String name = "prueba";
+        String artMovement = "artmovement";
+        String genre = "genre";
+        String country = "country";
+        String language = "language";
+        int minRuntime = 100;
+        int maxRuntime = 200;
+        String color = "true";
+        String sound = "true";
+        LocalDate startDate = LocalDate.of(1960,2,3);
+        LocalDate endDate = LocalDate.of(2600,2,3);
+
+        QueryMovieInputDto queryMovieInputDto = new QueryMovieInputDto(
+                name,artMovement,genre,country,language,minRuntime,
+                maxRuntime,color,sound,startDate,endDate);
+        List<MovieMinimunOutputDto> movieMinimunOutputDtosList =this.moviesController.getMoviesByQueryDto(queryMovieInputDto);
+
+        movieMinimunOutputDtosList.forEach( MovieMinimunOutputDto -> {
+                        assertTrue(Arrays.toString(MovieMinimunOutputDto.getName()).contains(name));
+                        assertTrue(date.isAfter(startDate));
+                        assertTrue(date.isBefore(endDate));
+                    });
+        }
+
 
     @Test
     public void getByName() throws NotFoundException{

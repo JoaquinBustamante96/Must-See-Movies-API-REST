@@ -1,13 +1,11 @@
 package com.first.demoMongo.documents;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Document
 public class Movie {
@@ -21,7 +19,7 @@ public class Movie {
     private String storyline;
     private String[] director;
     private String country;
-    private String lenguage;
+    private String language;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate releaseDate;
     private int runtime;
@@ -34,7 +32,7 @@ public class Movie {
     }
 
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
-                 String[] director, String country, String lenguage, LocalDate releaseDate,
+                 String[] director, String country, String language, LocalDate releaseDate,
                  int runtime, Boolean color, Boolean sound, String trailer, String poster) {
         this.name = name;
         this.genre = genre;
@@ -42,7 +40,7 @@ public class Movie {
         this.storyline = storyline;
         this.director = director;
         this.country = country;
-        this.lenguage = lenguage;
+        this.language = language;
         this.releaseDate = releaseDate;
         this.runtime = runtime;
         this.color = color;
@@ -83,8 +81,8 @@ public class Movie {
         this.country = country;
     }
 
-    public void setLenguage(String lenguage) {
-        this.lenguage = lenguage;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public void setReleaseDate(LocalDate releaseDate) {
@@ -135,8 +133,8 @@ public class Movie {
         return country;
     }
 
-    public String getLenguage() {
-        return lenguage;
+    public String getLanguage() {
+        return language;
     }
 
     public LocalDate getReleaseDate() {
