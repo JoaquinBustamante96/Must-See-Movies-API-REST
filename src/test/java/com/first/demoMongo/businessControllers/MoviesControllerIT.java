@@ -8,7 +8,6 @@ import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +66,7 @@ public class MoviesControllerIT {
         assertEquals(movie.getReleaseDate(),this.movieInputDto.getReleaseDate());
         assertEquals(movie.getArtMovement(),this.movieInputDto.getArtMovement());
         assertEquals(movie.getCountry(),this.movieInputDto.getCountry());
-        assertEquals(movie.getLenguage(),this.movieInputDto.getLenguage());
+        assertEquals(movie.getLanguage(),this.movieInputDto.getLanguage());
         assertEquals(movie.getStoryline(),this.movieInputDto.getStoryline());
         assertEquals(movie.getColor(),this.movieInputDto.getColor());
         assertEquals(movie.getSound(),this.movieInputDto.getSound());
