@@ -51,7 +51,7 @@ public class movieResorce {
     }
 
     @GetMapping(MOVIE)
-    public List<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto){
+    public List<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto) throws NotFoundException{
         return this.moviesController.getMoviesByQueryDto(queryMovieInputDto);
     }
 
