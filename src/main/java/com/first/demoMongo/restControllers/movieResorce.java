@@ -24,20 +24,21 @@ import java.util.stream.IntStream;
 
 @PreAuthorize("hasRole('USER')")
 @RestController
-@RequestMapping(movieResorce.crud)
+@RequestMapping(movieResorce.MOVIE)
 public class movieResorce {
 
-    public static final String crud = "/crudMovies";
     public static final String ID = "/{id}";
+    public static final String SUGGESTIONS = "/suggestions";
     public static final String NAME = "/{name}";
-    public static final String PRUEBA = "/prueba";
+    public static final String BY_NAME = "/name";
     public static final String MOVIE = "/movie";
+    public static final String FILTER = "/filter";
     public static final String POSTER = "/poster";
 
     @Autowired
     MoviesController moviesController;
 
-    @GetMapping(movieResorce.PRUEBA)
+    @GetMapping()
     public Page<Movie> getPage(@RequestParam int page, @RequestParam int size,
                                @RequestParam String key, @RequestParam String dir )throws BadRequestException {
         final int [] allowedSizes = {25,50,75,100};
@@ -50,7 +51,7 @@ public class movieResorce {
         return this.moviesController.getPage(page,size,key,direction);
     }
 
-    @GetMapping(MOVIE)
+    @GetMapping(FILTER)
     public Page<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto,
                                                            @RequestParam int page, @RequestParam int size) throws NotFoundException,BadRequestException{
         if(size>5 || size<0){
@@ -59,27 +60,27 @@ public class movieResorce {
         return this.moviesController.getMoviesByQueryDto(queryMovieInputDto,page,size);
     }
 
-    @GetMapping(value = NAME)
-    public List<String[]> getByName(@PathVariable String name)throws NotFoundException{
+    @GetMapping(SUGGESTIONS+NAME)
+    public List<String[]> getSuggestionsByName(@PathVariable String name)throws NotFoundException{
         return this.moviesController.getByName(name);
     }
 
-    @GetMapping(value = MOVIE+NAME)
+    @GetMapping(value = BY_NAME+NAME)
     public List<MovieOutputDto> getMoviesByName(@PathVariable String name) throws NotFoundException{
         return this.moviesController.getMoviesByName(name);
     }
 
-    @PutMapping(value = MOVIE)
+    @PutMapping()
     public void updatePoster(@RequestParam String id,@RequestBody MovieInputDto movie)throws NotFoundException{
         this.moviesController.updateMovie(id,movie);
     }
 
-    @PostMapping(value = MOVIE)
+    @PostMapping()
     public MovieMinimunOutputDto createMovie(@RequestBody MovieInputDto movie){
         return this.moviesController.createMovie(movie);
     }
 
-    @PutMapping(value = MOVIE+POSTER)
+    @PutMapping(POSTER)
     public void updatePoster(@RequestParam String id,@RequestParam String poster) throws  NotFoundException{
         this.moviesController.updatePoster(id,poster);
     }
