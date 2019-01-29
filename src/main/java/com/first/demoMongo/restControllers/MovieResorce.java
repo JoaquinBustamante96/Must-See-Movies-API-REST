@@ -14,18 +14,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.IntStream;
 
 @PreAuthorize("hasRole('USER')")
 @RestController
-@RequestMapping(movieResorce.MOVIE)
-public class movieResorce {
+@RequestMapping(MovieResorce.MOVIE)
+public class MovieResorce {
 
     public static final String ID = "/{id}";
     public static final String SUGGESTIONS = "/suggestions";

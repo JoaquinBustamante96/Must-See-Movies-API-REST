@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping(fileResorce.FILE)
-public class fileResorce {
+@RequestMapping(FileResorce.FILE)
+public class FileResorce {
 
     static final String FILE = "/file";
 

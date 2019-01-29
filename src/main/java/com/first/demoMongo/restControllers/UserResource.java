@@ -6,14 +6,13 @@ import com.first.demoMongo.dtos.TokenOutputDto;
 import com.first.demoMongo.dtos.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(userResource.userMapping)
-public class userResource {
+@RequestMapping(UserResource.userMapping)
+public class UserResource {
 
     public static final String userMapping = "/user";
     public static final String login = "/login";
@@ -28,7 +27,7 @@ public class userResource {
     }
 
     @PreAuthorize("hasRole('AUTHENTICATED')")
-    @PostMapping(userResource.login)
+    @PostMapping(UserResource.login)
     public TokenOutputDto login(@AuthenticationPrincipal User user){
 
         return userController.login(user.getUsername());
