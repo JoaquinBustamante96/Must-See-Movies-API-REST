@@ -42,7 +42,7 @@ public class movieResorce {
                                @RequestParam String key, @RequestParam String dir )throws BadRequestException {
         final int [] allowedSizes = {25,50,75,100};
         if(!IntStream.of(allowedSizes).anyMatch(x -> x == size)) {
-            throw new BadRequestException("Size: " + size +" or page "+page+ " is not allowed, allowed sizes are: 25,50,75,100");
+            throw new BadRequestException("Size: " + size + " is not allowed, allowed sizes are: 25,50,75,100");
         }
         Sort.Direction direction = Sort.Direction.fromOptionalString(dir)
                 .orElseThrow(()-> new BadRequestException("Dir not Allowed: "+dir+" allowed dir are asc or desc"));
@@ -51,8 +51,12 @@ public class movieResorce {
     }
 
     @GetMapping(MOVIE)
-    public List<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto) throws NotFoundException{
-        return this.moviesController.getMoviesByQueryDto(queryMovieInputDto);
+    public Page<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto,
+                                                           @RequestParam int page, @RequestParam int size) throws NotFoundException,BadRequestException{
+        if(size>5 || size<0){
+            throw new BadRequestException("Page size not allowed exception: Size"+size+"is not allowed, max allowed page size is "+5);
+        }
+        return this.moviesController.getMoviesByQueryDto(queryMovieInputDto,page,size);
     }
 
     @GetMapping(value = NAME)

@@ -14,6 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,100 +41,101 @@ public class MoviesControllerIT {
     private MovieRepository movieRepository;
 
     @Before
-    public void createMovieInputDto(){
-        this.databaseSeederService.initializeDB();
-        String[] array = new String[]{"first","second"};
-        this.movieInputDto = new MovieInputDto(array, LocalDate.of(1982,3,5), "artmovement", array,
+    public void createMovieInputDto() {
+        String[] array = new String[]{"first", "second"};
+        this.movieInputDto = new MovieInputDto(array, LocalDate.of(1982, 3, 5), "artmovement", array,
                 "storyline", array, "country", "lenguage",
-        14, true, true, "trailer","poster");
+                14, "true", "true", "trailer", "poster");
     }
 
     @Test
-    public void createMovie(){
+    public void createMovie() {
         MovieMinimunOutputDto movieMinimunOutputDto = this.moviesController.createMovie(this.movieInputDto);
-        assertEquals(Arrays.toString(movieMinimunOutputDto.getName()),Arrays.toString(this.movieInputDto.getName()));
+        assertEquals(Arrays.toString(movieMinimunOutputDto.getName()), Arrays.toString(this.movieInputDto.getName()));
     }
 
     @Test
     public void updatePoster() throws NotFoundException {
-        this.moviesController.updatePoster("0001","updatedPoster");
+        this.moviesController.updatePoster("0001", "updatedPoster");
         Movie movie = this.movieRepository.findById("0001").get();
-        assertEquals(movie.getPoster(),"updatedPoster");
+        assertEquals(movie.getPoster(), "updatedPoster");
     }
 
     @Test
-    public void updateMovie() throws NotFoundException{
-        this.moviesController.updateMovie("0001",this.movieInputDto);
+    public void updateMovie() throws NotFoundException {
+        this.moviesController.updateMovie("0001", this.movieInputDto);
         Movie movie = this.movieRepository.findById("0001").get();
-        assertEquals(Arrays.toString(movie.getName()),Arrays.toString(this.movieInputDto.getName()));
-        assertEquals(movie.getReleaseDate(),this.movieInputDto.getReleaseDate());
-        assertEquals(movie.getArtMovement(),this.movieInputDto.getArtMovement());
-        assertEquals(movie.getCountry(),this.movieInputDto.getCountry());
-        assertEquals(movie.getLanguage(),this.movieInputDto.getLanguage());
-        assertEquals(movie.getStoryline(),this.movieInputDto.getStoryline());
-        assertEquals(movie.getColor(),this.movieInputDto.getColor());
-        assertEquals(movie.getSound(),this.movieInputDto.getSound());
-        assertEquals(Arrays.toString(movie.getGenre()),Arrays.toString(this.movieInputDto.getGenre()));
-        assertEquals(Arrays.toString(movie.getDirector()),Arrays.toString(this.movieInputDto.getDirector()));
-        assertEquals(movie.getRuntime(),this.movieInputDto.getRuntime());
-        assertEquals(movie.getTrailer(),this.movieInputDto.getTrailer());
+        assertEquals(Arrays.toString(movie.getName()), Arrays.toString(this.movieInputDto.getName()));
+        assertEquals(movie.getReleaseDate(), this.movieInputDto.getReleaseDate());
+        assertEquals(movie.getArtMovement(), this.movieInputDto.getArtMovement());
+        assertEquals(movie.getCountry(), this.movieInputDto.getCountry());
+        assertEquals(movie.getLanguage(), this.movieInputDto.getLanguage());
+        assertEquals(movie.getStoryline(), this.movieInputDto.getStoryline());
+        assertEquals(movie.getColor(), this.movieInputDto.getColor());
+        assertEquals(movie.getSound(), this.movieInputDto.getSound());
+        assertEquals(Arrays.toString(movie.getGenre()), Arrays.toString(this.movieInputDto.getGenre()));
+        assertEquals(Arrays.toString(movie.getDirector()), Arrays.toString(this.movieInputDto.getDirector()));
+        assertEquals(movie.getRuntime(), this.movieInputDto.getRuntime());
+        assertEquals(movie.getTrailer(), this.movieInputDto.getTrailer());
 
     }
 
     @Test
-    public void getMoviesListByName() throws NotFoundException{
+    public void getMoviesListByName() throws NotFoundException {
         String name = "prueba";
         List<MovieOutputDto> moviesNames = this.moviesController.getMoviesByName(name);
-        assertTrue(moviesNames.size()>0);
+        assertTrue(moviesNames.size() > 0);
         moviesNames.forEach(MovieOutputDto -> {
             assertTrue(Arrays.toString(MovieOutputDto.getName()).contains(name));
         });
     }
 
     @Test
-    public void getMoviesByQueryDto() throws NotFoundException{
+    public void getMoviesByQueryDto() throws NotFoundException {
         Movie movie = this.movieRepository.findById("0003").get();
-        LocalDate date = LocalDate.of(1970,02,02);
+        LocalDate date = LocalDate.of(1970, 02, 02);
         movie.setReleaseDate(date);
         this.movieRepository.save(movie);
 
         String name = "prueba";
         String artMovement = "artmovement";
-        String genre = "genre";
+        String[] genre = {"genre1","genre2"};
         String country = "country";
         String language = "language";
         int minRuntime = 100;
         int maxRuntime = 200;
         String color = "true";
         String sound = "true";
-        LocalDate startDate = LocalDate.of(1960,2,3);
-        LocalDate endDate = LocalDate.of(2600,2,3);
+        LocalDate startDate = LocalDate.of(1960, 2, 3);
+        LocalDate endDate = LocalDate.of(2600, 2, 3);
 
         QueryMovieInputDto queryMovieInputDto = new QueryMovieInputDto(
-                name,artMovement,genre,country,language,minRuntime,
-                maxRuntime,color,sound,startDate,endDate);
-        List<MovieMinimunOutputDto> movieMinimunOutputDtosList =this.moviesController.getMoviesByQueryDto(queryMovieInputDto);
+                name, artMovement, genre, country, language, minRuntime,
+                maxRuntime, color, sound, startDate, endDate);
 
-        movieMinimunOutputDtosList.forEach( MovieMinimunOutputDto -> {
-                        assertTrue(Arrays.toString(MovieMinimunOutputDto.getName()).contains(name));
-                        assertTrue(date.isAfter(startDate));
-                        assertTrue(date.isBefore(endDate));
-                    });
-        }
+        Page<MovieMinimunOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0,5);
 
+        assertTrue(movieMinimunOutputDtosPage.getContent().size()>0);
+
+        movieMinimunOutputDtosPage.forEach(movieMinimunOutputDto -> {
+            assertTrue(Arrays.toString(movieMinimunOutputDto.getName()).contains(name));
+            assertTrue(movieMinimunOutputDto.getReleaseDate().isAfter(startDate));
+            assertTrue(movieMinimunOutputDto.getReleaseDate().isBefore(endDate));
+        });
+    }
 
     @Test
-    public void getByName() throws NotFoundException{
+    public void getByName() throws NotFoundException {
         String name = "prueba";
         List<String[]> moviesNames = this.moviesController.getByName(name);
-        assertTrue(moviesNames.size()<6);
-        for (String[] names: moviesNames) {
+        assertTrue(moviesNames.size() < 6);
+        for (String[] names : moviesNames) {
             assertTrue(Arrays.toString(names).toLowerCase().contains(name));
         }
     }
 
     @After
-    public void resetDB(){
+    public void resetDB() {
         this.databaseSeederService.resetDB();
     }
 

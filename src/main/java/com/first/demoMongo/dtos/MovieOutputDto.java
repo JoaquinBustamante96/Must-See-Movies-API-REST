@@ -4,20 +4,21 @@ import com.first.demoMongo.documents.Movie;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @NotNull
 @NotEmpty
 public class MovieOutputDto extends MovieMinimunOutputDto {
 
-    private String genre;
+    private String[] genre;
     private String storyline;
-    private String[] artMovement;
+    private String artMovement;
     private String[] director;
     private String country;
     private String language;
     private int runtime;
-    private Boolean color;
-    private Boolean sound;
+    private String color;
+    private String sound;
     private String trailer;
     private String poster;
 
@@ -25,7 +26,7 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         // Empty for framework
     }
 
-    public MovieOutputDto(String id, String[] name, LocalDate releaseDate, String[] artMovement, String genre, String storyline, String[] director, String country, String language, int durationInMin, Boolean color, Boolean sound) {
+    public MovieOutputDto(String id, String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String language, int durationInMin, String color, String sound) {
         super(id, name, releaseDate);
         this.genre = genre;
         this.artMovement=artMovement;
@@ -39,12 +40,12 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
     }
 
     public MovieOutputDto(Movie movie){
-        this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getGenre(),movie.getArtMovement(),
+        this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getArtMovement(),movie.getGenre(),
                 movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLanguage(),
                 movie.getRuntime(),movie.getColor(),movie.getSound());
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(String[] genre) {
         this.genre = genre;
     }
 
@@ -56,7 +57,7 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         this.director = director;
     }
 
-    public void setArtMovement(String[] artMovement) {
+    public void setArtMovement(String artMovement) {
         this.artMovement = artMovement;
     }
 
@@ -72,11 +73,11 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         this.runtime = durationInMin;
     }
 
-    public void setColor(Boolean color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    public void setSound(Boolean sound) {
+    public void setSound(String sound) {
         this.sound = sound;
     }
 
@@ -88,11 +89,11 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         this.poster = poster;
     }
 
-    public String getGenre() {
+    public String[] getGenre() {
         return genre;
     }
 
-    public String[] getArtMovement() {
+    public String getArtMovement() {
         return artMovement;
     }
     public String getStoryline() {
@@ -115,11 +116,11 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
         return runtime;
     }
 
-    public Boolean getColor() {
+    public String getColor() {
         return color;
     }
 
-    public Boolean getSound() {
+    public String getSound() {
         return sound;
     }
 
@@ -129,5 +130,22 @@ public class MovieOutputDto extends MovieMinimunOutputDto {
 
     public String getPoster() {
         return poster;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieOutputDto{" +
+                "genre=" + Arrays.toString(genre) +
+                ", storyline='" + storyline + '\'' +
+                ", artMovement='" + artMovement + '\'' +
+                ", director=" + Arrays.toString(director) +
+                ", country='" + country + '\'' +
+                ", language='" + language + '\'' +
+                ", runtime=" + runtime +
+                ", color='" + color + '\'' +
+                ", sound='" + sound + '\'' +
+                ", trailer='" + trailer + '\'' +
+                ", poster='" + poster + '\'' +
+                '}';
     }
 }

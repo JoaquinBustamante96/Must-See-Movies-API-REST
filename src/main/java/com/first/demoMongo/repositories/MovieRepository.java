@@ -3,6 +3,7 @@ package com.first.demoMongo.repositories;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -23,18 +24,18 @@ public interface MovieRepository extends MongoRepository<Movie,String> {
 
      @Query("{$and:[{'name':{$regex:?0,$options:'i'}}," +
              "{'artMovement':{$regex:?1,$options:'i'}}," +
-             "{'genre':{$regex:?2,$options:'i'}}," +
+             "{'genre':{ $all: ?2}},"+
              "{'country':{$regex:?3,$options:'i'}}," +
-             "{'language':{$regex:?4,$options:'i'}}," +
-             "{'runtime':{ $gt: ?5, $lt : ?6 }}," +
+             "{'language':{$regex:?4,$options:'i'}},"+
+             "{'runtime':{ $gt: ?5, $lt : ?6 }}, " +
              "{'color':{$regex:?7,$options:'i'}},"+
              "{'sound':{$regex:?8,$options:'i'}}," +
-             "{'releaseDate':{ $gte : ?9, $lt : ?10} }]}")
-     Optional<List<MovieMinimunOutputDto>> findByfilters(String name,String artMovement,
-                                                  String genre,String country,
-                                                  String language,int minRuntime,
-                                                  int maxRuntime, String color,
-                                                  String sound, LocalDate startDate,
-                                                  LocalDate endDate);
+             "{'releaseDate':{ $gte : ?9, $lt : ?10}} ]}")
+     Page<MovieMinimunOutputDto> findByfilters(String name, String artMovement,
+                                                     String[] genre, String country,
+                                                     String language, int minRuntime,
+                                                     int maxRuntime, String color,
+                                                     String sound, LocalDate startDate,
+                                                     LocalDate endDate, Pageable pageable);
 
 }
