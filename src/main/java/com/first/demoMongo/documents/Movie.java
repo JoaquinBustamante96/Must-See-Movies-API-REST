@@ -23,8 +23,8 @@ public class Movie {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate releaseDate;
     private int runtime;
-    private Boolean color;
-    private Boolean sound;
+    private String color;
+    private String sound;
     private String trailer;
     private String poster;
 
@@ -33,7 +33,7 @@ public class Movie {
 
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
                  String[] director, String country, String language, LocalDate releaseDate,
-                 int runtime, Boolean color, Boolean sound, String trailer, String poster) {
+                 int runtime, String color, String sound, String trailer, String poster) {
         this.name = name;
         this.genre = genre;
         this.artMovement = artMovement;
@@ -93,11 +93,11 @@ public class Movie {
         this.runtime = runtime;
     }
 
-    public void setColor(Boolean color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    public void setSound(Boolean sound) {
+    public void setSound(String sound) {
         this.sound = sound;
     }
 
@@ -145,11 +145,11 @@ public class Movie {
         return runtime;
     }
 
-    public Boolean getColor() {
+    public String getColor() {
         return color;
     }
 
-    public Boolean getSound() {
+    public String getSound() {
         return sound;
     }
 

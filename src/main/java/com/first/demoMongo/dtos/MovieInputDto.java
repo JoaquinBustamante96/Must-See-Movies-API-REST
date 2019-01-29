@@ -28,10 +28,8 @@ public class MovieInputDto {
     private String language;
     @NotNull @NotEmpty
     private int runtime;
-    @NotNull @NotEmpty
-    private Boolean color;
-    @NotNull @NotEmpty
-    private Boolean sound;
+    private String color;
+    private String sound;
     private String trailer;
     private String poster;
 
@@ -40,7 +38,7 @@ public class MovieInputDto {
     }
 
     public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String language,
-                         int runtime, Boolean color, Boolean sound, String trailer,String poster) {
+                         int runtime, String color, String sound, String trailer, String poster) {
         this.name=name;
         this.releaseDate=releaseDate;
         this.genre = genre;
@@ -96,11 +94,11 @@ public class MovieInputDto {
         this.runtime = runtime;
     }
 
-    public void setColor(Boolean color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    public void setSound(Boolean sound) {
+    public void setSound(String sound) {
         this.sound = sound;
     }
 
@@ -141,11 +139,11 @@ public class MovieInputDto {
         return runtime;
     }
 
-    public Boolean getColor() {
+    public String getColor() {
         return color;
     }
 
-    public Boolean getSound() {
+    public String getSound() {
         return sound;
     }
 

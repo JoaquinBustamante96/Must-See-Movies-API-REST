@@ -6,14 +6,17 @@ import static org.junit.Assert.assertTrue;
 
 import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
+import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimunOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -64,7 +67,7 @@ public class MovieIT {
 
         String name = "prueba";
         String artMovement = "artmovement";
-        String genre = "genre";
+        String[] genre = {"genre1"};
         String country = "country";
         String language = "language";
         int minRuntime = 100;
@@ -74,15 +77,11 @@ public class MovieIT {
         LocalDate startDate = LocalDate.of(1960,2,3);
         LocalDate endDate = LocalDate.of(2600,2,3);
 
-        Optional<List<MovieMinimunOutputDto>> moviesOptional = this.movieRepository.findByfilters(
-                name,artMovement,genre,country,language,minRuntime,maxRuntime,color,sound,startDate,endDate);
+        Page<MovieMinimunOutputDto> movies = this.movieRepository.findByfilters(
+                name,artMovement,genre,country,language,minRuntime,maxRuntime,color,sound,startDate,endDate,PageRequest.of(0,5));
 
-        moviesOptional.ifPresent(movieList -> {
-                    movieList.forEach( MovieMinimunOutputDto -> {
-                        assertTrue(Arrays.toString(MovieMinimunOutputDto.getName()).contains(name));
-                            }
-                    );
-                });
+        assertTrue(Arrays.toString(movies.getContent().get(0).getName()).contains(name));
+
     }
 
     @After

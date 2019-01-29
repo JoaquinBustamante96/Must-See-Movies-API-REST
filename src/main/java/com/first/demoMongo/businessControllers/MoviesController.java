@@ -46,12 +46,20 @@ public class MoviesController {
        return names;
     }
 
-    public List<MovieMinimunOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto) throws NotFoundException{
+    public Page<MovieMinimunOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto,int page,int size) throws NotFoundException{
 
-        return this.movieRepository.findByfilters(queryMovieInputDto.getName(),queryMovieInputDto.getArtMovement(),queryMovieInputDto.getGenre(),
-                queryMovieInputDto.getCountry(),queryMovieInputDto.getLanguage(),queryMovieInputDto.getMinRuntime(),queryMovieInputDto.getMaxRuntime(),
-                queryMovieInputDto.getColor(),queryMovieInputDto.getSound(),queryMovieInputDto.getStartDate(),queryMovieInputDto.getEndDate())
-                .orElseThrow( ()-> new NotFoundException("No movie found by the given filters"));
+        return this.movieRepository.findByfilters(
+                queryMovieInputDto.getName(),
+                queryMovieInputDto.getArtMovement(),
+                queryMovieInputDto.getGenre(),
+                queryMovieInputDto.getCountry(),
+                queryMovieInputDto.getLanguage(),
+                queryMovieInputDto.getMinRuntime(),
+                queryMovieInputDto.getMaxRuntime(),
+                queryMovieInputDto.getColor(),
+                queryMovieInputDto.getSound(),
+                queryMovieInputDto.getStartDate(),
+                queryMovieInputDto.getEndDate(),PageRequest.of(page,size));
     }
 
     public MovieMinimunOutputDto createMovie(MovieInputDto movieDto){

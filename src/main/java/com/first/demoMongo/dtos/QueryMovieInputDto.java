@@ -1,12 +1,13 @@
 package com.first.demoMongo.dtos;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class QueryMovieInputDto {
 
     private String name;
     private String artMovement;
-    private String genre;
+    private String[] genre;
     private String country;
     private String language;
     private String color;
@@ -19,14 +20,14 @@ public class QueryMovieInputDto {
     public QueryMovieInputDto() {
     }
 
-    public QueryMovieInputDto(String name, String artMovement, String genre, String country,
-                              String lenguage, int minRuntime, int maxRuntime, String color,
+    public QueryMovieInputDto(String name, String artMovement, String[] genre, String country,
+                              String language, int minRuntime, int maxRuntime, String color,
                               String sound, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.artMovement = artMovement;
         this.genre = genre;
         this.country = country;
-        this.language = lenguage;
+        this.language = language;
         this.minRuntime = minRuntime;
         this.maxRuntime = maxRuntime;
         this.color = color;
@@ -43,7 +44,7 @@ public class QueryMovieInputDto {
         this.artMovement = artMovement;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(String[] genre) {
         this.genre = genre;
     }
 
@@ -87,7 +88,7 @@ public class QueryMovieInputDto {
         return artMovement;
     }
 
-    public String getGenre() {
+    public String[] getGenre() {
         return genre;
     }
 
@@ -121,5 +122,22 @@ public class QueryMovieInputDto {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryMovieInputDto{" +
+                "name='" + name + '\'' +
+                ", artMovement='" + artMovement + '\'' +
+                ", genre=" + Arrays.toString(genre) +
+                ", country='" + country + '\'' +
+                ", language='" + language + '\'' +
+                ", color='" + color + '\'' +
+                ", sound='" + sound + '\'' +
+                ", minRuntime=" + minRuntime +
+                ", maxRuntime=" + maxRuntime +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }

@@ -19,7 +19,7 @@ movieList:
     storyline: storylineT
     director: ['director1', 'director2']
     country: countryT
-    language: lenguageT
+    language: languageT
     runtime: 14
     color: True
     sound: True
@@ -32,7 +32,7 @@ movieList:
     storyline: storylineT
     director: ['director1', 'director2']
     country: countryT
-    language: lenguageT
+    language: languageT
     runtime: 150
     color: True
     sound: True

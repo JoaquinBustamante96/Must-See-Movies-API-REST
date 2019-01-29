@@ -26,7 +26,7 @@ public class DatabaseSeederService {
 
     @PostConstruct
     public void constructor(){
-        this.initializeDB();
+        //this.resetDB();
     }
 
     public void initializeDB() {
