@@ -132,6 +132,15 @@ public class MoviesControllerIT {
         }
     }
 
+    @Test
+    void getMovieById() throws NotFoundException{
+       MovieOutputDto movieOutputDto = this.moviesController.getMovieById("0002");
+       assertEquals(movieOutputDto.getName(),"name1");
+       assertEquals(movieOutputDto.getArtMovement(),"artmovementT");
+       assertEquals(movieOutputDto.getCountry(),"United States");
+       assertEquals(movieOutputDto.getId(),"0002");
+    }
+
     @After
     public void resetDB() {
         this.databaseSeederService.resetDB();
