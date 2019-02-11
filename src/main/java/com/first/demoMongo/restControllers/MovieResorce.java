@@ -3,7 +3,7 @@ package com.first.demoMongo.restControllers;
 import com.first.demoMongo.businessControllers.MoviesController;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
-import com.first.demoMongo.dtos.MovieMinimunOutputDto;
+import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.exceptions.BadRequestException;
@@ -35,6 +35,11 @@ public class MovieResorce {
     @Autowired
     MoviesController moviesController;
 
+    @GetMapping(ID)
+    public MovieOutputDto getMovieById(@PathVariable String id) throws NotFoundException{
+        return this.moviesController.getMovieById(id);
+    }
+
     @GetMapping()
     public Page<Movie> getPage(@RequestParam int page, @RequestParam int size,
                                @RequestParam String key, @RequestParam String dir )throws BadRequestException {
@@ -49,12 +54,12 @@ public class MovieResorce {
     }
 
     @GetMapping(FILTER)
-    public Page<MovieMinimunOutputDto> getMoviesbyQueryDto(@RequestBody QueryMovieInputDto queryMovieInputDto,
+    public Page<MovieMinimumOutputDto> getMoviesbyQueryDto(QueryMovieInputDto filters,
                                                            @RequestParam int page, @RequestParam int size) throws NotFoundException,BadRequestException{
-        if(size>5 || size<0){
-            throw new BadRequestException("Page size not allowed exception: Size"+size+"is not allowed, max allowed page size is "+5);
+        if(size>5 || size<0) {
+            throw new BadRequestException("Page size not allowed exception: Size" + size + "is not allowed, max allowed page size is " + 5);
         }
-        return this.moviesController.getMoviesByQueryDto(queryMovieInputDto,page,size);
+        return this.moviesController.getMoviesByQueryDto(filters,page,size);
     }
 
     @GetMapping(SUGGESTIONS+NAME)
@@ -73,7 +78,7 @@ public class MovieResorce {
     }
 
     @PostMapping()
-    public MovieMinimunOutputDto createMovie(@RequestBody MovieInputDto movie){
+    public MovieMinimumOutputDto createMovie(@RequestBody MovieInputDto movie){
         return this.moviesController.createMovie(movie);
     }
 

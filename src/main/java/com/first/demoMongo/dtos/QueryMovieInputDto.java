@@ -1,11 +1,13 @@
 package com.first.demoMongo.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 
 public class QueryMovieInputDto {
 
-    private String name;
     private String artMovement;
     private String[] genre;
     private String country;
@@ -14,16 +16,17 @@ public class QueryMovieInputDto {
     private String sound;
     private int minRuntime;
     private int maxRuntime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate startDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate endDate;
 
     public QueryMovieInputDto() {
     }
 
-    public QueryMovieInputDto(String name, String artMovement, String[] genre, String country,
+    public QueryMovieInputDto( String artMovement, String[] genre, String country,
                               String language, int minRuntime, int maxRuntime, String color,
                               String sound, LocalDate startDate, LocalDate endDate) {
-        this.name = name;
         this.artMovement = artMovement;
         this.genre = genre;
         this.country = country;
@@ -34,10 +37,6 @@ public class QueryMovieInputDto {
         this.sound = sound;
         this.startDate = startDate;
         this.endDate = endDate;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setArtMovement(String artMovement) {
@@ -80,9 +79,6 @@ public class QueryMovieInputDto {
         this.endDate = endDate;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public String getArtMovement() {
         return artMovement;
@@ -127,8 +123,7 @@ public class QueryMovieInputDto {
     @Override
     public String toString() {
         return "QueryMovieInputDto{" +
-                "name='" + name + '\'' +
-                ", artMovement='" + artMovement + '\'' +
+                "artMovement='" + artMovement + '\'' +
                 ", genre=" + Arrays.toString(genre) +
                 ", country='" + country + '\'' +
                 ", language='" + language + '\'' +

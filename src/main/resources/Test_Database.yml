@@ -1,12 +1,11 @@
 movieList:
   - id: 0001
-    name: ['prueba', 'string2']
-    artMovement: asd
-    genre: ['string1', 'string2']
-    storyline: asd
-    director: ['string1', 'string2']
-    country: asd
-    language: asd
+    name: ['natural born killers', 'string2']
+    genre: ['Action', 'Suspense']
+    storyline: Natural Born Killers is a 1994 American satirical black comedy crime film directed by Oliver Stone and starring Woody Harrelson, Juliette Lewis, Robert Downey Jr., Tom Sizemore, and Tommy Lee Jones. The film tells the story oftwo victims of traumatic childhoods who became lovers and mass murderers, and are irresponsibly glorified by the mass media.
+    director: ['Oliver Stone', 'string2']
+    country: United States
+    language: English
     runtime: 123
     color: True
     sound: True
@@ -38,6 +37,71 @@ movieList:
     sound: True
     trailer: trailer
     poster: poster
+  - id: 0004
+    name: ['prueba', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: asd
+    director: ['string1', 'string2']
+    country: asd
+    language: asd
+    runtime: 123
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
+  - id: 0005
+    name: ['prueba', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: asd
+    director: ['string1', 'string2']
+    country: asd
+    language: asd
+    runtime: 123
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
+  - id: 0006
+    name: ['prueba', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: asd
+    director: ['string1', 'string2']
+    country: asd
+    language: asd
+    runtime: 123
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
+  - id: 0007
+    name: ['prueba', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: asd
+    director: ['string1', 'string2']
+    country: asd
+    language: asd
+    runtime: 123
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
+  - id: 0008
+    name: ['natural born killers', 'string2']
+    genre: ['Action', 'Suspense']
+    artMovement: ''
+    storyline: Natural Born Killers is a 1994 American satirical black comedy crime film directed by Oliver Stone and starring Woody Harrelson, Juliette Lewis, Robert Downey Jr., Tom Sizemore, and Tommy Lee Jones. The film tells the story oftwo victims of traumatic childhoods who became lovers and mass murderers, and are irresponsibly glorified by the mass media.
+    director: ['Oliver Stone', 'string2']
+    country: United States
+    language: English
+    runtime: 123
+    color: True
+    sound: True
+    trailer: asd
+    poster: asd
 userList:
   - id: 0001;
     username: usernameTest

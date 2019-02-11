@@ -4,7 +4,9 @@ import com.first.demoMongo.documents.Role;
 import com.first.demoMongo.documents.User;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 public class UserDto {
     @NotEmpty
