@@ -6,12 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
-import com.first.demoMongo.dtos.MovieInputDto;
-import com.first.demoMongo.dtos.MovieMinimunOutputDto;
+import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -53,9 +49,9 @@ public class MovieIT {
         String name = "prueba";
         int size = 1;
         int page=0;
-        List<MovieMinimunOutputDto> movieMinimunOutputDto = this.movieRepository.findBynameContaining(name, PageRequest.of(page,size)).get();
-        assertEquals(movieMinimunOutputDto.size(),1);
-        assertTrue(Arrays.toString(movieMinimunOutputDto.get(0).getName()).toLowerCase().contains(name));
+        List<MovieMinimumOutputDto> movieMinimumOutputDto = this.movieRepository.findBynameContaining(name, PageRequest.of(page,size)).get();
+        assertEquals(movieMinimumOutputDto.size(),1);
+        assertTrue(Arrays.toString(movieMinimumOutputDto.get(0).getName()).toLowerCase().contains(name));
     }
 
     @Test
@@ -77,8 +73,8 @@ public class MovieIT {
         LocalDate startDate = LocalDate.of(1960,2,3);
         LocalDate endDate = LocalDate.of(2600,2,3);
 
-        Page<MovieMinimunOutputDto> movies = this.movieRepository.findByfilters(
-                name,artMovement,genre,country,language,minRuntime,maxRuntime,color,sound,startDate,endDate,PageRequest.of(0,5));
+        Page<MovieMinimumOutputDto> movies = this.movieRepository.findByfilters(
+                artMovement,genre,country,language,minRuntime,maxRuntime,color,sound,startDate,endDate,PageRequest.of(0,5));
 
         assertTrue(Arrays.toString(movies.getContent().get(0).getName()).contains(name));
 

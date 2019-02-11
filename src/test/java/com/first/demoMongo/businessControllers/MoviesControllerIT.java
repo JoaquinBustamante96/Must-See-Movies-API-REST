@@ -3,7 +3,7 @@ package com.first.demoMongo.businessControllers;
 import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieInputDto;
-import com.first.demoMongo.dtos.MovieMinimunOutputDto;
+import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.exceptions.NotFoundException;
@@ -15,11 +15,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.validation.constraints.AssertTrue;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +48,8 @@ public class MoviesControllerIT {
 
     @Test
     public void createMovie() {
-        MovieMinimunOutputDto movieMinimunOutputDto = this.moviesController.createMovie(this.movieInputDto);
-        assertEquals(Arrays.toString(movieMinimunOutputDto.getName()), Arrays.toString(this.movieInputDto.getName()));
+        MovieMinimumOutputDto movieMinimumOutputDto = this.moviesController.createMovie(this.movieInputDto);
+        assertEquals(Arrays.toString(movieMinimumOutputDto.getName()), Arrays.toString(this.movieInputDto.getName()));
     }
 
     @Test
@@ -110,10 +108,10 @@ public class MoviesControllerIT {
         LocalDate endDate = LocalDate.of(2600, 2, 3);
 
         QueryMovieInputDto queryMovieInputDto = new QueryMovieInputDto(
-                name, artMovement, genre, country, language, minRuntime,
+                artMovement, genre, country, language, minRuntime,
                 maxRuntime, color, sound, startDate, endDate);
 
-        Page<MovieMinimunOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0,5);
+        Page<MovieMinimumOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0,5);
 
         assertTrue(movieMinimunOutputDtosPage.getContent().size()>0);
 
@@ -132,6 +130,15 @@ public class MoviesControllerIT {
         for (String[] names : moviesNames) {
             assertTrue(Arrays.toString(names).toLowerCase().contains(name));
         }
+    }
+
+    @Test
+    void getMovieById() throws NotFoundException{
+       MovieOutputDto movieOutputDto = this.moviesController.getMovieById("0002");
+       assertEquals(movieOutputDto.getName(),"name1");
+       assertEquals(movieOutputDto.getArtMovement(),"artmovementT");
+       assertEquals(movieOutputDto.getCountry(),"United States");
+       assertEquals(movieOutputDto.getId(),"0002");
     }
 
     @After
