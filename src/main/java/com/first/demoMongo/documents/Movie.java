@@ -25,15 +25,15 @@ public class Movie {
     private int runtime;
     private String color;
     private String sound;
-    private String trailer;
     private String poster;
+    private MovieLinks movieLinks;
 
     public Movie() {
     }
 
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
                  String[] director, String country, String language, LocalDate releaseDate,
-                 int runtime, String color, String sound, String trailer, String poster) {
+                 int runtime, String color, String sound, String poster,MovieLinks movieLinks) {
         this.name = name;
         this.genre = genre;
         this.artMovement = artMovement;
@@ -45,8 +45,12 @@ public class Movie {
         this.runtime = runtime;
         this.color = color;
         this.sound = sound;
-        this.trailer = trailer;
         this.poster = poster;
+        this.movieLinks = movieLinks;
+    }
+
+    public void setMovieLinks(MovieLinks movieLinks) {
+        this.movieLinks = movieLinks;
     }
 
     public void setArtMovement(String artMovement) {
@@ -101,12 +105,13 @@ public class Movie {
         this.sound = sound;
     }
 
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
-    }
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public MovieLinks getMovieLinks() {
+        return movieLinks;
     }
 
     public String getArtMovement() {
@@ -153,9 +158,6 @@ public class Movie {
         return sound;
     }
 
-    public String getTrailer() {
-        return trailer;
-    }
 
     public String getPoster() {
         return poster;

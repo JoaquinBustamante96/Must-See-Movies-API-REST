@@ -43,7 +43,7 @@ public class MoviesControllerIT {
         String[] array = new String[]{"first", "second"};
         this.movieInputDto = new MovieInputDto(array, LocalDate.of(1982, 3, 5), "artmovement", array,
                 "storyline", array, "country", "lenguage",
-                14, "true", "true", "trailer", "poster");
+                14, "true", "true", "trailer", "poster","imdb");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class MoviesControllerIT {
         assertEquals(Arrays.toString(movie.getGenre()), Arrays.toString(this.movieInputDto.getGenre()));
         assertEquals(Arrays.toString(movie.getDirector()), Arrays.toString(this.movieInputDto.getDirector()));
         assertEquals(movie.getRuntime(), this.movieInputDto.getRuntime());
-        assertEquals(movie.getTrailer(), this.movieInputDto.getTrailer());
+        assertEquals(movie.getMovieLinks().getYoutubeId(), this.movieInputDto.getTrailer());
 
     }
 
@@ -133,11 +133,11 @@ public class MoviesControllerIT {
     }
 
     @Test
-    void getMovieById() throws NotFoundException{
+    public void getMovieById() throws NotFoundException{
        MovieOutputDto movieOutputDto = this.moviesController.getMovieById("0002");
-       assertEquals(movieOutputDto.getName(),"name1");
+       assertEquals(movieOutputDto.getName()[0],"name1");
        assertEquals(movieOutputDto.getArtMovement(),"artmovementT");
-       assertEquals(movieOutputDto.getCountry(),"United States");
+       assertEquals(movieOutputDto.getCountry(),"countryT");
        assertEquals(movieOutputDto.getId(),"0002");
     }
 

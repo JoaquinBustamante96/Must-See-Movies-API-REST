@@ -1,6 +1,8 @@
 package com.first.demoMongo.dtos;
 
 import com.first.demoMongo.documents.Movie;
+import com.first.demoMongo.documents.MovieLinks;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -16,7 +18,7 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
     private int runtime;
     private String color;
     private String sound;
-    private String trailer;
+    private MovieLinks movieLinks;
 
     public MovieOutputDto(){
         // Empty for framework
@@ -25,7 +27,7 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
     public MovieOutputDto(String id, String[] name, LocalDate releaseDate,
                           String artMovement, String[] genre, String storyline,
                           String[] director, String country, String language,
-                          int durationInMin, String color, String sound,String trailer) {
+                          int durationInMin, String color, String sound,MovieLinks movieLinks) {
         super(id, name, releaseDate,storyline,country,director);
         this.genre = genre;
         this.artMovement=artMovement;
@@ -33,13 +35,21 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
         this.runtime = durationInMin;
         this.color = color;
         this.sound = sound;
-        this.trailer = trailer;
+        this.movieLinks = movieLinks;
     }
 
     public MovieOutputDto(Movie movie){
         this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getArtMovement(),movie.getGenre(),
                 movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLanguage(),
-                movie.getRuntime(),movie.getColor(),movie.getSound(),movie.getTrailer());
+                movie.getRuntime(),movie.getColor(),movie.getSound(),movie.getMovieLinks());
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public void setMovieLinks(MovieLinks movieLinks) {
+        this.movieLinks = movieLinks;
     }
 
     public void setGenre(String[] genre) {
@@ -54,20 +64,12 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
         this.language = language;
     }
 
-    public void setDurationInMin(int durationInMin) {
-        this.runtime = durationInMin;
-    }
-
     public void setColor(String color) {
         this.color = color;
     }
 
     public void setSound(String sound) {
         this.sound = sound;
-    }
-
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
     }
 
     public String[] getGenre() {
@@ -82,10 +84,6 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
         return language;
     }
 
-    public int getDurationInMin() {
-        return runtime;
-    }
-
     public String getColor() {
         return color;
     }
@@ -94,20 +92,11 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
         return sound;
     }
 
-    public String getTrailer() {
-        return trailer;
+    public int getRuntime() {
+        return runtime;
     }
 
-    @Override
-    public String toString() {
-        return "MovieOutputDto{" +
-                "genre=" + Arrays.toString(genre) +
-                ", artMovement='" + artMovement + '\'' +
-                ", language='" + language + '\'' +
-                ", runtime=" + runtime +
-                ", color='" + color + '\'' +
-                ", sound='" + sound + '\'' +
-                ", trailer='" + trailer + '\'' +
-                '}';
+    public MovieLinks getMovieLinks() {
+        return movieLinks;
     }
 }

@@ -31,6 +31,7 @@ public class MovieInputDto {
     private String color;
     private String sound;
     private String trailer;
+    private String imdbUrl;
     private String poster;
 
     public MovieInputDto(){
@@ -38,7 +39,7 @@ public class MovieInputDto {
     }
 
     public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String language,
-                         int runtime, String color, String sound, String trailer, String poster) {
+                         int runtime, String color, String sound, String trailer, String poster,String imdbUrl) {
         this.name=name;
         this.releaseDate=releaseDate;
         this.genre = genre;
@@ -52,6 +53,11 @@ public class MovieInputDto {
         this.sound = sound;
         this.trailer = trailer;
         this.poster=poster;
+        this.imdbUrl = imdbUrl;
+    }
+
+    public void setImdbUrl(String imdbUrl) {
+        this.imdbUrl = imdbUrl;
     }
 
     public void setPoster(String poster) {
@@ -149,6 +155,10 @@ public class MovieInputDto {
 
     public String getTrailer() {
         return trailer;
+    }
+
+    public String getImdbUrl() {
+        return imdbUrl;
     }
 
     public String getArtMovement() {

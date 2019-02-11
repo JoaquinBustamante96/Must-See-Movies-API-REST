@@ -1,6 +1,7 @@
 package com.first.demoMongo.businessControllers;
 
 import com.first.demoMongo.documents.Movie;
+import com.first.demoMongo.documents.MovieLinks;
 import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
@@ -81,13 +82,13 @@ public class MoviesController {
 
     }
 
-    public MovieMinimumOutputDto createMovie(MovieInputDto movieDto) {
-        Movie movie = new Movie(movieDto.getName(), movieDto.getGenre(),
-                movieDto.getStoryline(), movieDto.getArtMovement(),
-                movieDto.getDirector(), movieDto.getCountry(),
-                movieDto.getLanguage(), movieDto.getReleaseDate()
-                , movieDto.getRuntime(), movieDto.getColor(), movieDto.getSound(),
-                movieDto.getTrailer(), "");
+    public MovieMinimumOutputDto createMovie(MovieInputDto movieInputDto) {
+        Movie movie = new Movie(movieInputDto.getName(), movieInputDto.getGenre(),
+                movieInputDto.getStoryline(), movieInputDto.getArtMovement(),
+                movieInputDto.getDirector(), movieInputDto.getCountry(),
+                movieInputDto.getLanguage(), movieInputDto.getReleaseDate()
+                , movieInputDto.getRuntime(), movieInputDto.getColor(), movieInputDto.getSound(),
+                movieInputDto.getPoster(), new MovieLinks(movieInputDto.getTrailer(),movieInputDto.getImdbUrl()));
 
         this.movieRepository.save(movie);
 
@@ -114,7 +115,7 @@ public class MoviesController {
         movie.setLanguage(movieInputDto.getLanguage());
         movie.setRuntime(movieInputDto.getRuntime());
         movie.setReleaseDate(movieInputDto.getReleaseDate());
-        movie.setTrailer(movieInputDto.getTrailer());
+        movie.getMovieLinks().setYoutubeId(movieInputDto.getTrailer());
 
         movieRepository.save(movie);
     }

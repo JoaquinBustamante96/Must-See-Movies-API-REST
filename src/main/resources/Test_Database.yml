@@ -9,7 +9,9 @@ movieList:
     runtime: 123
     color: True
     sound: True
-    trailer: asd
+    movieLinks:
+        youtubeId: youtubeIdtest
+        imdb: imdb.test
     poster: asd
   - id: 0002
     name: ['name1', 'name2']
@@ -22,7 +24,6 @@ movieList:
     runtime: 14
     color: True
     sound: True
-    trailer: asd
     poster: asd
   - id: 0003
     name: ['prueba', 'name2']
@@ -35,7 +36,6 @@ movieList:
     runtime: 150
     color: True
     sound: True
-    trailer: trailer
     poster: poster
   - id: 0004
     name: ['prueba', 'string2']
@@ -48,7 +48,6 @@ movieList:
     runtime: 123
     color: True
     sound: True
-    trailer: asd
     poster: asd
   - id: 0005
     name: ['prueba', 'string2']
@@ -61,7 +60,6 @@ movieList:
     runtime: 123
     color: True
     sound: True
-    trailer: asd
     poster: asd
   - id: 0006
     name: ['prueba', 'string2']
@@ -74,7 +72,6 @@ movieList:
     runtime: 123
     color: True
     sound: True
-    trailer: asd
     poster: asd
   - id: 0007
     name: ['prueba', 'string2']
@@ -87,7 +84,6 @@ movieList:
     runtime: 123
     color: True
     sound: True
-    trailer: asd
     poster: asd
   - id: 0008
     name: ['natural born killers', 'string2']
@@ -100,7 +96,9 @@ movieList:
     runtime: 123
     color: True
     sound: True
-    trailer: asd
+    movieLinks:
+        youtubeId: youtubeIdtest
+        imdb: imdb.test
     poster: asd
 userList:
   - id: 0001;
