@@ -88,7 +88,7 @@ public class MoviesController {
                 movieInputDto.getDirector(), movieInputDto.getCountry(),
                 movieInputDto.getLanguage(), movieInputDto.getReleaseDate()
                 , movieInputDto.getRuntime(), movieInputDto.getColor(), movieInputDto.getSound(),
-                movieInputDto.getPoster(), new MovieLinks(movieInputDto.getTrailer(),movieInputDto.getImdbUrl()));
+                movieInputDto.getPoster(), new MovieLinks(movieInputDto.getMovieLinksDto().getYoutubeId(),movieInputDto.getMovieLinksDto().getImdb()));
 
         this.movieRepository.save(movie);
 
@@ -115,7 +115,12 @@ public class MoviesController {
         movie.setLanguage(movieInputDto.getLanguage());
         movie.setRuntime(movieInputDto.getRuntime());
         movie.setReleaseDate(movieInputDto.getReleaseDate());
-        movie.getMovieLinks().setYoutubeId(movieInputDto.getTrailer());
+        if(movie.getMovieLinks()==null){
+            movie.setMovieLinks(new MovieLinks(movieInputDto.getMovieLinksDto().getYoutubeId(),movieInputDto.getMovieLinksDto().getImdb()));
+        }else{
+            movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinksDto().getYoutubeId());
+            movie.getMovieLinks().setImdb(movieInputDto.getMovieLinksDto().getImdb());
+        }
 
         movieRepository.save(movie);
     }

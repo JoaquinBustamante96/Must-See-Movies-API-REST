@@ -30,8 +30,7 @@ public class MovieInputDto {
     private int runtime;
     private String color;
     private String sound;
-    private String trailer;
-    private String imdbUrl;
+    private MovieLinksDto movieLinksDto;
     private String poster;
 
     public MovieInputDto(){
@@ -39,7 +38,7 @@ public class MovieInputDto {
     }
 
     public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String language,
-                         int runtime, String color, String sound, String trailer, String poster,String imdbUrl) {
+                         int runtime, String color, String sound, String poster,MovieLinksDto movieLinksDto) {
         this.name=name;
         this.releaseDate=releaseDate;
         this.genre = genre;
@@ -51,13 +50,12 @@ public class MovieInputDto {
         this.runtime = runtime;
         this.color = color;
         this.sound = sound;
-        this.trailer = trailer;
         this.poster=poster;
-        this.imdbUrl = imdbUrl;
+        this.movieLinksDto = movieLinksDto;
     }
 
-    public void setImdbUrl(String imdbUrl) {
-        this.imdbUrl = imdbUrl;
+    public void setMovieLinksDto(MovieLinksDto movieLinksDto) {
+        this.movieLinksDto = movieLinksDto;
     }
 
     public void setPoster(String poster) {
@@ -108,11 +106,6 @@ public class MovieInputDto {
         this.sound = sound;
     }
 
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
-    }
-
-
     public String[] getName() {
         return name;
     }
@@ -149,17 +142,14 @@ public class MovieInputDto {
         return color;
     }
 
+    public MovieLinksDto getMovieLinksDto() {
+        return movieLinksDto;
+    }
+
     public String getSound() {
         return sound;
     }
 
-    public String getTrailer() {
-        return trailer;
-    }
-
-    public String getImdbUrl() {
-        return imdbUrl;
-    }
 
     public String getArtMovement() {
         return artMovement;
@@ -183,7 +173,6 @@ public class MovieInputDto {
                 ", runtime=" + runtime +
                 ", color=" + color +
                 ", sound=" + sound +
-                ", trailer='" + trailer + '\'' +
                 '}';
     }
 }
