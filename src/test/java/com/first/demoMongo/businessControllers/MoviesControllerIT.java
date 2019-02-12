@@ -2,10 +2,7 @@ package com.first.demoMongo.businessControllers;
 
 import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
-import com.first.demoMongo.dtos.MovieInputDto;
-import com.first.demoMongo.dtos.MovieMinimumOutputDto;
-import com.first.demoMongo.dtos.MovieOutputDto;
-import com.first.demoMongo.dtos.QueryMovieInputDto;
+import com.first.demoMongo.dtos.*;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
 import org.junit.After;
@@ -43,7 +40,7 @@ public class MoviesControllerIT {
         String[] array = new String[]{"first", "second"};
         this.movieInputDto = new MovieInputDto(array, LocalDate.of(1982, 3, 5), "artmovement", array,
                 "storyline", array, "country", "lenguage",
-                14, "true", "true", "trailer", "poster","imdb");
+                14, "true", "true", "poster",new MovieLinksDto("youtubeId","imdb"));
     }
 
     @Test
@@ -74,7 +71,7 @@ public class MoviesControllerIT {
         assertEquals(Arrays.toString(movie.getGenre()), Arrays.toString(this.movieInputDto.getGenre()));
         assertEquals(Arrays.toString(movie.getDirector()), Arrays.toString(this.movieInputDto.getDirector()));
         assertEquals(movie.getRuntime(), this.movieInputDto.getRuntime());
-        assertEquals(movie.getMovieLinks().getYoutubeId(), this.movieInputDto.getTrailer());
+        assertEquals(movie.getMovieLinks().getYoutubeId(), this.movieInputDto.getMovieLinksDto().getYoutubeId());
 
     }
 
