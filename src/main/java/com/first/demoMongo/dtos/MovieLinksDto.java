@@ -5,6 +5,9 @@ public class MovieLinksDto {
     private String youtubeId;
     private String imdb;
 
+    public MovieLinksDto() {
+    }
+
     public MovieLinksDto(String youtubeId, String imdb) {
         this.youtubeId = youtubeId;
         this.imdb = imdb;

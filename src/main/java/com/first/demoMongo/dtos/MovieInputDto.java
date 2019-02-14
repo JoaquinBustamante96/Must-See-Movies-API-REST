@@ -30,7 +30,7 @@ public class MovieInputDto {
     private int runtime;
     private String color;
     private String sound;
-    private MovieLinksDto movieLinksDto;
+    private MovieLinksDto movieLinks;
     private String poster;
 
     public MovieInputDto(){
@@ -38,7 +38,7 @@ public class MovieInputDto {
     }
 
     public MovieInputDto(String[] name, LocalDate releaseDate, String artMovement, String[] genre, String storyline, String[] director, String country, String language,
-                         int runtime, String color, String sound, String poster,MovieLinksDto movieLinksDto) {
+                         int runtime, String color, String sound, String poster,MovieLinksDto movieLinks) {
         this.name=name;
         this.releaseDate=releaseDate;
         this.genre = genre;
@@ -51,11 +51,11 @@ public class MovieInputDto {
         this.color = color;
         this.sound = sound;
         this.poster=poster;
-        this.movieLinksDto = movieLinksDto;
+        this.movieLinks = movieLinks;
     }
 
-    public void setMovieLinksDto(MovieLinksDto movieLinksDto) {
-        this.movieLinksDto = movieLinksDto;
+    public void setMovieLinks(MovieLinksDto movieLinks) {
+        this.movieLinks = movieLinks;
     }
 
     public void setPoster(String poster) {
@@ -142,8 +142,8 @@ public class MovieInputDto {
         return color;
     }
 
-    public MovieLinksDto getMovieLinksDto() {
-        return movieLinksDto;
+    public MovieLinksDto getMovieLinks() {
+        return movieLinks;
     }
 
     public String getSound() {

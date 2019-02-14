@@ -98,8 +98,8 @@ movieList:
     color: True
     sound: True
     movieLinks:
-        youtubeId: youtubeIdtest
-        imdb: imdb.test
+        youtubeId: IzhBFHIMbUs
+        imdb: https://www.imdb.com/title/tt0110632/
     poster: asd
 userList:
   - id: 0001;
