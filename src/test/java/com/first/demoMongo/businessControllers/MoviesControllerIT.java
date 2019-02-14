@@ -40,7 +40,7 @@ public class MoviesControllerIT {
         String[] array = new String[]{"first", "second"};
         this.movieInputDto = new MovieInputDto(array, LocalDate.of(1982, 3, 5), "artmovement", array,
                 "storyline", array, "country", "lenguage",
-                14, "true", "true", "poster",new MovieLinksDto("youtubeId","imdb"));
+                14, "true", "true", "poster", new MovieLinksDto("youtubeId", "imdb"));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class MoviesControllerIT {
         assertEquals(Arrays.toString(movie.getGenre()), Arrays.toString(this.movieInputDto.getGenre()));
         assertEquals(Arrays.toString(movie.getDirector()), Arrays.toString(this.movieInputDto.getDirector()));
         assertEquals(movie.getRuntime(), this.movieInputDto.getRuntime());
-        assertEquals(movie.getMovieLinks().getYoutubeId(), this.movieInputDto.getMovieLinksDto().getYoutubeId());
+        assertEquals(movie.getMovieLinks().getYoutubeId(), this.movieInputDto.getMovieLinks().getYoutubeId());
 
     }
 
@@ -94,7 +94,7 @@ public class MoviesControllerIT {
 
         String name = "prueba";
         String artMovement = "artmovement";
-        String[] genre = {"genre1","genre2"};
+        String[] genre = {"genre1", "genre2"};
         String country = "country";
         String language = "language";
         int minRuntime = 100;
@@ -108,9 +108,9 @@ public class MoviesControllerIT {
                 artMovement, genre, country, language, minRuntime,
                 maxRuntime, color, sound, startDate, endDate);
 
-        Page<MovieMinimumOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0,5);
+        Page<MovieMinimumOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0, 5);
 
-        assertTrue(movieMinimunOutputDtosPage.getContent().size()>0);
+        assertTrue(movieMinimunOutputDtosPage.getContent().size() > 0);
 
         movieMinimunOutputDtosPage.forEach(movieMinimunOutputDto -> {
             assertTrue(Arrays.toString(movieMinimunOutputDto.getName()).contains(name));
@@ -130,12 +130,18 @@ public class MoviesControllerIT {
     }
 
     @Test
-    public void getMovieById() throws NotFoundException{
-       MovieOutputDto movieOutputDto = this.moviesController.getMovieById("0002");
-       assertEquals(movieOutputDto.getName()[0],"name1");
-       assertEquals(movieOutputDto.getArtMovement(),"artmovementT");
-       assertEquals(movieOutputDto.getCountry(),"countryT");
-       assertEquals(movieOutputDto.getId(),"0002");
+    public void getMovieById() throws NotFoundException {
+        MovieOutputDto movieOutputDto = this.moviesController.getMovieById("0002");
+        assertEquals(movieOutputDto.getName()[0], "name1");
+        assertEquals(movieOutputDto.getArtMovement(), "artmovementT");
+        assertEquals(movieOutputDto.getCountry(), "countryT");
+        assertEquals(movieOutputDto.getId(), "0002");
+    }
+
+    @Test
+    public void getRelatedMovies() throws NotFoundException {
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtos = this.moviesController.getRelatedMovies("0006", 0, 3);
+        assertTrue(movieMinimumOutputDtos.getContent().size() <= 3);
     }
 
     @After

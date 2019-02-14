@@ -23,9 +23,9 @@ public class MoviesController {
     @Autowired
     private MovieRepository movieRepository;
 
-    public MovieOutputDto getMovieById(String id) throws NotFoundException{
-      return new MovieOutputDto(this.movieRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("No Film Found With the given ID:"+id)
+    public MovieOutputDto getMovieById(String id) throws NotFoundException {
+        return new MovieOutputDto(this.movieRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("No Film Found With the given ID:" + id)
         ));
     }
 
@@ -50,6 +50,19 @@ public class MoviesController {
             throw new NotFoundException("no movie found with name: " + name);
         }
         return names;
+    }
+
+    public Page<MovieMinimumOutputDto> getRelatedMovies(String id, int page, int size) throws NotFoundException {
+        Movie movie = this.movieRepository.findById(id).orElseThrow(() -> new NotFoundException("No film found with the given Id: " + id));
+        String artMovement = movie.getArtMovement();
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = Page.empty();
+        if (artMovement != null && artMovement.length() > 0) {
+            movieMinimumOutputDtoPage = this.movieRepository.findByartMovement(movie.getArtMovement(), PageRequest.of(page, size));
+        } else {
+            movieMinimumOutputDtoPage = this.movieRepository.findBygenre(movie.getGenre()[0], PageRequest.of(page, size));
+        }
+
+        return movieMinimumOutputDtoPage;
     }
 
     public Page<MovieMinimumOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto, int page, int size) throws NotFoundException {
@@ -88,7 +101,7 @@ public class MoviesController {
                 movieInputDto.getDirector(), movieInputDto.getCountry(),
                 movieInputDto.getLanguage(), movieInputDto.getReleaseDate()
                 , movieInputDto.getRuntime(), movieInputDto.getColor(), movieInputDto.getSound(),
-                movieInputDto.getPoster(), new MovieLinks(movieInputDto.getMovieLinksDto().getYoutubeId(),movieInputDto.getMovieLinksDto().getImdb()));
+                movieInputDto.getPoster(), new MovieLinks(movieInputDto.getMovieLinks().getYoutubeId(), movieInputDto.getMovieLinks().getImdb()));
 
         this.movieRepository.save(movie);
 
@@ -115,11 +128,11 @@ public class MoviesController {
         movie.setLanguage(movieInputDto.getLanguage());
         movie.setRuntime(movieInputDto.getRuntime());
         movie.setReleaseDate(movieInputDto.getReleaseDate());
-        if(movie.getMovieLinks()==null){
-            movie.setMovieLinks(new MovieLinks(movieInputDto.getMovieLinksDto().getYoutubeId(),movieInputDto.getMovieLinksDto().getImdb()));
-        }else{
-            movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinksDto().getYoutubeId());
-            movie.getMovieLinks().setImdb(movieInputDto.getMovieLinksDto().getImdb());
+        if (movie.getMovieLinks() == null) {
+            movie.setMovieLinks(new MovieLinks(movieInputDto.getMovieLinks().getYoutubeId(), movieInputDto.getMovieLinks().getImdb()));
+        } else {
+            movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
+            movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getImdb());
         }
 
         movieRepository.save(movie);
