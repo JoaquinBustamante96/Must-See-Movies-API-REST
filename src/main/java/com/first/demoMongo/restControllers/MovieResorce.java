@@ -54,6 +54,11 @@ public class MovieResorce {
         return this.moviesController.getPage(page, size, key, direction);
     }
 
+    @GetMapping(value = MOVIE + BY_NAME + NAME)
+    public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(@PathVariable String name, int page, int size) throws NotFoundException{
+       return this.moviesController.getMinimunMoviesDtoByName(name,page,size);
+    }
+
     @GetMapping(FILTER)
     public Page<MovieMinimumOutputDto> getMoviesbyQueryDto(QueryMovieInputDto filters,
                                                            @RequestParam int page, @RequestParam int size) throws NotFoundException, BadRequestException {
@@ -68,7 +73,7 @@ public class MovieResorce {
         return this.moviesController.getByName(name);
     }
 
-    @GetMapping(MOVIE + RELATED + ID)
+    @GetMapping(RELATED + ID)
     public Page<MovieMinimumOutputDto> getRelatedMovies(@PathVariable String id, @RequestParam int page, @RequestParam int size) throws NotFoundException {
         return this.moviesController.getRelatedMovies(id, page, size);
     }

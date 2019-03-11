@@ -22,7 +22,7 @@ public class FileResorce {
     @Autowired
     S3Services s3Services;
 
-    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, value="/")
     public byte[] downloadFile(@RequestParam() String id) throws IOException{
         return s3Services.downloadFile(id).toByteArray();
     }

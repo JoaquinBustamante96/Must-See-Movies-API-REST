@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public interface MovieRepository extends MongoRepository<Movie, String> {
 
     @Query("{'name':{$regex:?0,$options:'i'}}")
-    Optional<List<MovieMinimumOutputDto>> findBynameContaining(String name, Pageable pageable);
+    Optional<Page<MovieMinimumOutputDto>> findBynameContaining(String name, Pageable pageable);
 
     @Query("{'name':{$regex:?0,$options:'i'}}")
     Optional<List<MovieOutputDto>> findBynameContaining(String name);

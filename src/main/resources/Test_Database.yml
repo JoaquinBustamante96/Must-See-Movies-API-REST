@@ -87,6 +87,81 @@ movieList:
     sound: True
     poster: asd
   - id: 0008
+    name: ['Chungking Express' ]
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: Wong Kar-Wai's movie about two love-struck cops is filmed in impressionistic splashes of motion and color. The first half deals with Cop 223, who has broken up with his girlfriend of five years. He purchases a tin of pineapples with an expiration date of May 1 each day for a month. By the end of that time, he feels that he will either be rejoined with his love or that it too will have expired forever. The second half shows Cop 663 dealing with his breakup with his flight attendant girlfriend. He talks to his apartment furnishings until he meets a new girl at a local lunch counter.
+    director: ['Wong Kar-wai', 'string2']
+    country: Hong Kong
+    language: chinese
+    runtime: 123
+    color: True
+    sound: True
+    poster: chungking.jpg
+    movieLinks:
+        youtubeId: kTgeMUWBEQ8
+        imdb: https://www.imdb.com/title/tt0109424/
+  - id: 0009
+    name: ['Fallen Angels', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: Wong Kar-wai's Fallen Angels is a sequel of sorts to the director's 1994 U.S. breakthrough Chungking Express. Expanding on the latter's style, themes, and mood, Fallen Angels is set in the surreal milieu of urban, nighttime Hong Kong. As with the filmmaker's other features, plot takes a back seat to mood. The wisp of a narrative intercuts two story lines.
+    director: ['Wong Kar-wai', 'string2']
+    country: Hong Kong
+    language: chinese
+    runtime: 123
+    color: True
+    sound: True
+    poster: fallen.jpg
+    movieLinks:
+        youtubeId: dtum6XVH3HI
+        imdb: https://www.imdb.com/title/tt0112913/?ref_=nv_sr_1
+  - id: 0010
+    name: ['Un homme qui dort', 'string2']
+    artMovement: asd
+    genre: ['string1', 'string2']
+    storyline: A 25-year-old male student in Paris becomes indifferent to the world around him, and subsequently feels a strong sense of alienation and hopelessness.
+    director: ['Bernard Queysanne', 'string2']
+    country: France
+    language: French
+    runtime: 123
+    color: True
+    sound: True
+    poster: qui.jpg
+    movieLinks:
+        youtubeId: at-o0fvCBNg
+        imdb: https://www.imdb.com/title/tt0112913/?ref_=nv_sr_1
+  - id: 0011
+    name: ['The Seventh Seal', 'string2']
+    artMovement: asd
+    genre: ['Drama', 'string2']
+    storyline: A Knight and his squire are home from the crusades. Black Death is sweeping their country. As they approach home, Death appears to the knight and tells him it is his time. The knight challenges Death to a chess game for his life. The Knight and Death play as the cultural turmoil envelopes the people around them as they try, in different ways, to deal with the upheaval the plague has caused.
+    director: ['Ingmar Bergman', 'string2']
+    country: Sweden
+    language: Swedish
+    runtime: 123
+    color: True
+    sound: True
+    poster: sello.jpg
+    movieLinks:
+        youtubeId: NtkFei4wRjE
+        imdb: https://www.imdb.com/title/tt0050976/
+  - id: 0012
+    name: ['Vivre sa vie', 'string2']
+    artMovement: asd
+    genre: ['Drama', 'string2']
+    storyline: This film explores a Parisian woman's descent into prostitution. The movie is comprised of a series of 12 "tableaux"-- scenes which are basically unconnected episodes, each presented with a worded introduction.
+    director: [' Jean-Luc Godard', 'string2']
+    country: France
+    language: French
+    runtime: 123
+    color: True
+    sound: True
+    poster: vivre.jpg
+    movieLinks:
+        youtubeId: ZAZGR5O33jw
+        imdb: https://www.imdb.com/title/tt0056663/?ref_=nv_sr_1
+  - id: 0013
     name: ['natural born killers', 'string2']
     genre: ['Action', 'Suspense']
     artMovement: ''
@@ -98,9 +173,9 @@ movieList:
     color: True
     sound: True
     movieLinks:
-        youtubeId: IzhBFHIMbUs
-        imdb: https://www.imdb.com/title/tt0110632/
-    poster: asd
+        youtubeId: XpLKNclOtLg
+        imdb: https://www.imdb.com/title/tt0110632/?ref_=nv_sr_1
+    poster: Natural Born killers.jpg
 userList:
   - id: 0001;
     username: usernameTest

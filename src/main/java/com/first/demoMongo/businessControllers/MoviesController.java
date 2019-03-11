@@ -33,8 +33,19 @@ public class MoviesController {
         return this.movieRepository.findAll(PageRequest.of(page, size, dir, key));
     }
 
+    public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(String name, int page, int size) throws NotFoundException {
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository.findBynameContaining(name, PageRequest.of(page,size))
+                .orElseThrow(() -> new NotFoundException("No Film Found With The Given name:" + name));
+        if(movieMinimumOutputDtoPage.getSize() == 0){
+            throw  new NotFoundException("No Film Found With The Given name:" + name);
+        }
+        return movieMinimumOutputDtoPage;
+    }
+
+
     public List<MovieOutputDto> getMoviesByName(String name) throws NotFoundException {
-        return this.movieRepository.findBynameContaining(name).orElseThrow(() -> new NotFoundException("No Film Found With The Given name:" + name));
+        return this.movieRepository.findBynameContaining(name)
+                .orElseThrow(() -> new NotFoundException("No Film Found With The Given name:" + name));
     }
 
     public List<String[]> getByName(String name) throws NotFoundException {
@@ -53,7 +64,8 @@ public class MoviesController {
     }
 
     public Page<MovieMinimumOutputDto> getRelatedMovies(String id, int page, int size) throws NotFoundException {
-        Movie movie = this.movieRepository.findById(id).orElseThrow(() -> new NotFoundException("No film found with the given Id: " + id));
+        Movie movie = this.movieRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No film found with the given Id: " + id));
         String artMovement = movie.getArtMovement();
         Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = Page.empty();
         if (artMovement != null && artMovement.length() > 0) {
@@ -109,7 +121,8 @@ public class MoviesController {
     }
 
     public void updatePoster(String id, String poster) throws NotFoundException {
-        Movie movie = movieRepository.findById(id).orElseThrow(() -> new NotFoundException("No Film Found With The Given ID:" + id));
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No Film Found With The Given ID:" + id));
         movie.setPoster(poster);
         movieRepository.save(movie);
     }

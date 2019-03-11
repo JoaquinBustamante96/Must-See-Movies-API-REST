@@ -24,13 +24,14 @@ public class MovieMinimumOutputDto {
         // Empty for framework
     }
 
-    public MovieMinimumOutputDto(String id, String[] name, LocalDate releaseDate, String storyline, String country, String[] director) {
+    public MovieMinimumOutputDto(String id, String[] name, LocalDate releaseDate, String storyline, String country, String[] director,String poster) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.storyline = storyline;
         this.country = country;
         this.director = director;
+        this.poster = poster;
     }
 
     public MovieMinimumOutputDto(Movie movie){
