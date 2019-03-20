@@ -101,12 +101,12 @@ public class MoviesControllerIT {
         int maxRuntime = 200;
         String color = "true";
         String sound = "true";
-        LocalDate startDate = LocalDate.of(1960, 2, 3);
-        LocalDate endDate = LocalDate.of(2600, 2, 3);
+        int startYear = 1960;
+        int endYear = 2600;
 
         QueryMovieInputDto queryMovieInputDto = new QueryMovieInputDto(
                 artMovement, genre, country, language, minRuntime,
-                maxRuntime, color, sound, startDate, endDate);
+                maxRuntime, color, sound, startYear, endYear);
 
         Page<MovieMinimumOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0, 5);
 
@@ -114,8 +114,8 @@ public class MoviesControllerIT {
 
         movieMinimunOutputDtosPage.forEach(movieMinimunOutputDto -> {
             assertTrue(Arrays.toString(movieMinimunOutputDto.getName()).contains(name));
-            assertTrue(movieMinimunOutputDto.getReleaseDate().isAfter(startDate));
-            assertTrue(movieMinimunOutputDto.getReleaseDate().isBefore(endDate));
+            assertTrue(movieMinimunOutputDto.getReleaseDate().isAfter(queryMovieInputDto.getStartYearAsLocalDate()));
+            assertTrue(movieMinimunOutputDto.getReleaseDate().isBefore(queryMovieInputDto.getEndYearAsLocalDate()));
         });
     }
 

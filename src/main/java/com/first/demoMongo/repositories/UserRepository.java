@@ -12,8 +12,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     public User findByusername(String userName);
 
-    public User findBydni(String dni);
-
     @Query("{ 'token.value' : ?0 }")
     public User findByTokenValue(String tokenValue);
 

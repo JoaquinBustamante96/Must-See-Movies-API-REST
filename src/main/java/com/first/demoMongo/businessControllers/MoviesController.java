@@ -88,8 +88,8 @@ public class MoviesController {
                     queryMovieInputDto.getMaxRuntime(),
                     queryMovieInputDto.getColor(),
                     queryMovieInputDto.getSound(),
-                    queryMovieInputDto.getStartDate(),
-                    queryMovieInputDto.getEndDate(), PageRequest.of(page, size));
+                    queryMovieInputDto.getStartYearAsLocalDate(),
+                    queryMovieInputDto.getEndYearAsLocalDate(), PageRequest.of(page, size));
         } else {
             movieMinimumOutputDtosPage = this.movieRepository.findByfilters(
                     queryMovieInputDto.getArtMovement(),
@@ -100,8 +100,8 @@ public class MoviesController {
                     queryMovieInputDto.getMaxRuntime(),
                     queryMovieInputDto.getColor(),
                     queryMovieInputDto.getSound(),
-                    queryMovieInputDto.getStartDate(),
-                    queryMovieInputDto.getEndDate(), PageRequest.of(page, size));
+                    queryMovieInputDto.getStartYearAsLocalDate(),
+                    queryMovieInputDto.getEndYearAsLocalDate(), PageRequest.of(page, size));
         }
         return movieMinimumOutputDtosPage;
 

@@ -8,6 +8,7 @@ import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import com.first.demoMongo.exceptions.NotFoundException;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,16 +46,6 @@ public class MovieIT {
     }
 
     @Test
-    public void findBynameContainingPageable() {
-        String name = "prueba";
-        int size = 1;
-        int page = 0;
-        List<MovieMinimumOutputDto> movieMinimumOutputDto = this.movieRepository.findBynameContaining(name, PageRequest.of(page, size)).get();
-        assertEquals(movieMinimumOutputDto.size(), 1);
-        assertTrue(Arrays.toString(movieMinimumOutputDto.get(0).getName()).toLowerCase().contains(name));
-    }
-
-    @Test
     public void findByFilters() {
 
         Movie movie = this.movieRepository.findById("0003").get();
@@ -85,6 +76,19 @@ public class MovieIT {
         Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository.findBygenre("asd", PageRequest.of(0, 3));
         assertTrue(movieMinimumOutputDtoPage.getContent().size() <= 3);
     }
+
+    @Test
+    public void getMinimunMoviesDtoByName() throws NotFoundException {
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository
+                .findBynameContaining("prueba", PageRequest.of(0, 2)).get();
+
+        movieMinimumOutputDtoPage.forEach(
+                movieMinimumOutputDto -> {
+                    assertTrue(Arrays.toString(movieMinimumOutputDto.getName()).contains("prueba"));
+                }
+        );
+    }
+
 
     @After
     public void resetDB() {

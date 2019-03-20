@@ -6,6 +6,7 @@ import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
+import com.first.demoMongo.dtos.validations.DirectionValidate;
 import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.stream.IntStream;
 
-@PreAuthorize("hasRole('USER')")
 @RestController
 @RequestMapping(MovieResorce.MOVIE)
+@PreAuthorize("hasRole('ADMIN')")
+
 public class MovieResorce {
 
     public static final String ID = "/{id}";
@@ -37,73 +41,80 @@ public class MovieResorce {
     MoviesController moviesController;
 
     @GetMapping(ID)
+    @PreAuthorize("permitAll()")
     public MovieOutputDto getMovieById(@PathVariable String id) throws NotFoundException {
         return this.moviesController.getMovieById(id);
     }
 
     @GetMapping()
-    public Page<Movie> getPage(@RequestParam int page, @RequestParam int size,
-                               @RequestParam String key, @RequestParam String dir) throws BadRequestException {
-        final int[] allowedSizes = {25, 50, 75, 100};
-        if (!IntStream.of(allowedSizes).anyMatch(x -> x == size)) {
-            throw new BadRequestException("Size: " + size + " is not allowed, allowed sizes are: 25,50,75,100");
-        }
-        Sort.Direction direction = Sort.Direction.fromOptionalString(dir)
-                .orElseThrow(() -> new BadRequestException("Dir not Allowed: " + dir + " allowed dir are asc or desc"));
+    @PreAuthorize("hasRole('ADMIN')")
+    public Page<Movie> getPage(@RequestParam @Min(0) @Max(1000) int page, @RequestParam @Min(0) @Max(100) int size,
+                               @RequestParam String key, @RequestParam @DirectionValidate String dir) throws BadRequestException {
 
-        return this.moviesController.getPage(page, size, key, direction);
+        return this.moviesController.getPage(page, size, key, Sort.Direction.fromString(dir));
     }
 
-    @GetMapping(value = MOVIE + BY_NAME + NAME)
+    @GetMapping(value = FILTER + BY_NAME + NAME)
+    @PreAuthorize("permitAll()")
     public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(@PathVariable String name, int page, int size) throws NotFoundException{
        return this.moviesController.getMinimunMoviesDtoByName(name,page,size);
     }
 
     @GetMapping(FILTER)
-    public Page<MovieMinimumOutputDto> getMoviesbyQueryDto(QueryMovieInputDto filters,
-                                                           @RequestParam int page, @RequestParam int size) throws NotFoundException, BadRequestException {
-        if (size > 5 || size < 0) {
-            throw new BadRequestException("Page size not allowed exception: Size" + size + "is not allowed, max allowed page size is " + 5);
-        }
+    @PreAuthorize("permitAll()")
+    public Page<MovieMinimumOutputDto> getMoviesbyQueryDto
+            (QueryMovieInputDto filters,
+             @RequestParam @Min(0) @Max(1000) int page,
+             @RequestParam @Min(0)@Max(5) int size)
+            throws NotFoundException, BadRequestException {
+
         return this.moviesController.getMoviesByQueryDto(filters, page, size);
     }
 
     @GetMapping(SUGGESTIONS + NAME)
+    @PreAuthorize("permitAll()")
     public List<String[]> getSuggestionsByName(@PathVariable String name) throws NotFoundException {
         return this.moviesController.getByName(name);
     }
 
     @GetMapping(RELATED + ID)
+    @PreAuthorize("permitAll()")
     public Page<MovieMinimumOutputDto> getRelatedMovies(@PathVariable String id, @RequestParam int page, @RequestParam int size) throws NotFoundException {
         return this.moviesController.getRelatedMovies(id, page, size);
     }
 
     @GetMapping(value = BY_NAME + NAME)
+    @PreAuthorize("permitAll()")
     public List<MovieOutputDto> getMoviesByName(@PathVariable String name) throws NotFoundException {
         return this.moviesController.getMoviesByName(name);
     }
 
     @PutMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public void updatePoster(@RequestParam String id, @RequestBody MovieInputDto movie) throws NotFoundException {
         this.moviesController.updateMovie(id, movie);
     }
 
     @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public MovieMinimumOutputDto createMovie(@RequestBody MovieInputDto movie) {
         return this.moviesController.createMovie(movie);
     }
 
     @PutMapping(POSTER)
+    @PreAuthorize("hasRole('ADMIN')")
     public void updatePoster(@RequestParam String id, @RequestParam String poster) throws NotFoundException {
         this.moviesController.updatePoster(id, poster);
     }
 
     @PutMapping(value = ID)
+    @PreAuthorize("hasRole('ADMIN')")
     public void updateMovie(@PathVariable String id, @Valid @RequestBody MovieInputDto movieInputDto) throws MethodArgumentNotValidException, NotFoundException {
         this.moviesController.updateMovie(id, movieInputDto);
     }
 
     @DeleteMapping(value = ID)
+    @PreAuthorize("hasRole('ADMIN')")
     public void delteMovie(@PathVariable String id) {
         moviesController.deleteMovie(id);
     }

@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 
 @Service
 public class DatabaseSeederService {
@@ -26,7 +27,7 @@ public class DatabaseSeederService {
 
     @PostConstruct
     public void constructor(){
-        //this.resetDB();
+        this.resetDB();
     }
 
     public void initializeDB() {
@@ -39,6 +40,13 @@ public class DatabaseSeederService {
             Yaml yamlParser = new Yaml(new Constructor(DatabaseGraph.class));
             InputStream input = new ClassPathResource(ymlFileName).getInputStream();
             DatabaseGraph databaseGraph = (DatabaseGraph) yamlParser.load(input);
+
+            databaseGraph.getMovieList().forEach(
+                    movie ->{
+                        if(Integer.parseInt(movie.getId())>= 8)
+                        movie.setReleaseDate(LocalDate.of(1999,01,01));
+                    }
+            );
 
             this.movieRepository.saveAll(databaseGraph.getMovieList());
             this.userRepository.saveAll(databaseGraph.getUserList());

@@ -28,7 +28,9 @@ public class MovieInputDto {
     private String language;
     @NotNull @NotEmpty
     private int runtime;
+    @NotNull @NotEmpty
     private String color;
+    @NotNull @NotEmpty
     private String sound;
     private MovieLinksDto movieLinks;
     private String poster;
