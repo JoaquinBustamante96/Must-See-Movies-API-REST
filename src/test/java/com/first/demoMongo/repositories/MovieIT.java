@@ -89,6 +89,14 @@ public class MovieIT {
         );
     }
 
+    @Test
+    public void getRelatedByArtMovementAndGenre(){
+        System.out.println("------------------------------------start------------------------------------------------------");
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage = this.movieRepository
+                .findRelatedByArtMovementAndGenre("9","French Impressionism","Drama",PageRequest.of(0,5));
+        movieMinimumOutputDtosPage.forEach(movieMinimumOutputDto -> System.out.println(Arrays.toString(movieMinimumOutputDto.getName())));
+    }
+
 
     @After
     public void resetDB() {

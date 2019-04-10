@@ -34,10 +34,10 @@ public class MoviesController {
     }
 
     public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(String name, int page, int size) throws NotFoundException {
-        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository.findBynameContaining(name, PageRequest.of(page,size))
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository.findBynameContaining(name, PageRequest.of(page, size))
                 .orElseThrow(() -> new NotFoundException("No Film Found With The Given name:" + name));
-        if(movieMinimumOutputDtoPage.getSize() == 0){
-            throw  new NotFoundException("No Film Found With The Given name:" + name);
+        if (movieMinimumOutputDtoPage.getSize() == 0) {
+            throw new NotFoundException("No Film Found With The Given name:" + name);
         }
         return movieMinimumOutputDtoPage;
     }
@@ -66,15 +66,18 @@ public class MoviesController {
     public Page<MovieMinimumOutputDto> getRelatedMovies(String id, int page, int size) throws NotFoundException {
         Movie movie = this.movieRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No film found with the given Id: " + id));
-        String artMovement = movie.getArtMovement();
-        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = Page.empty();
-        if (artMovement != null && artMovement.length() > 0) {
-            movieMinimumOutputDtoPage = this.movieRepository.findByartMovement(movie.getArtMovement(), PageRequest.of(page, size));
-        } else {
-            movieMinimumOutputDtoPage = this.movieRepository.findBygenre(movie.getGenre()[0], PageRequest.of(page, size));
-        }
 
-        return movieMinimumOutputDtoPage;
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage =
+                this.movieRepository
+                        .findRelatedByArtMovementAndGenre(
+                                id,
+                                movie.getArtMovement(),
+                                movie.getGenre()[0],
+                                PageRequest.of(page, size)
+                        );
+
+
+        return movieMinimumOutputDtosPage;
     }
 
     public Page<MovieMinimumOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto, int page, int size) throws NotFoundException {
@@ -103,6 +106,7 @@ public class MoviesController {
                     queryMovieInputDto.getStartYearAsLocalDate(),
                     queryMovieInputDto.getEndYearAsLocalDate(), PageRequest.of(page, size));
         }
+
         return movieMinimumOutputDtosPage;
 
     }

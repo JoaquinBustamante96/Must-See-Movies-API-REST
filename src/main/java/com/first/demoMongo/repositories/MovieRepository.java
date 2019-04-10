@@ -25,6 +25,11 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
 
     Page<MovieMinimumOutputDto> findByartMovement(String artMovement, Pageable pageable);
 
+    @Query("{$and:[ {'id':{ $not: {$regex:?0,$options:'i'} }}," +
+            "{$or: [ {'artMovement':{$regex:?1,$options:'i'}},{'genre':{$regex:?2,$options:'i'}} ]} " +
+            "]}")
+    Page<MovieMinimumOutputDto> findRelatedByArtMovementAndGenre(String id,String artMovement,String genre,Pageable pageable);
+
     @Query("{'genre':?0}")
     Page<MovieMinimumOutputDto> findBygenre(String genre, Pageable pageable);
 

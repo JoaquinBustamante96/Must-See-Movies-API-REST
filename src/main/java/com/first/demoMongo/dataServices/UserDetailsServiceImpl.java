@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return this.userBuilder(user.getUsername(), new BCryptPasswordEncoder().encode(P_TOKEN),
                     user.getRoles(),
                     user.isActive(),
-                    user.isTokenExpired()
+                    !user.isTokenExpired()
                     );
         } else {
             user = userRepository.findByusername(usernameOrTokenValue);
