@@ -27,8 +27,8 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
     public MovieOutputDto(String id, String[] name, LocalDate releaseDate,
                           String artMovement, String[] genre, String storyline,
                           String[] director, String country, String language,
-                          int durationInMin, String color, String sound,MovieLinks movieLinks) {
-        super(id, name, releaseDate,storyline,country,director);
+                          int durationInMin, String color, String sound,MovieLinks movieLinks,String poster) {
+        super(id, name, releaseDate,storyline,country,director,poster);
         this.genre = genre;
         this.artMovement=artMovement;
         this.language = language;
@@ -41,7 +41,7 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
     public MovieOutputDto(Movie movie){
         this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getArtMovement(),movie.getGenre(),
                 movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLanguage(),
-                movie.getRuntime(),movie.getColor(),movie.getSound(),movie.getMovieLinks());
+                movie.getRuntime(),movie.getColor(),movie.getSound(),movie.getMovieLinks(),movie.getPoster());
     }
 
     public void setRuntime(int runtime) {

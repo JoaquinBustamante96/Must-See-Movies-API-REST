@@ -8,6 +8,7 @@ import com.first.demoMongo.dataServices.DatabaseSeederService;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import com.first.demoMongo.exceptions.NotFoundException;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,31 +35,21 @@ public class MovieIT {
     private DatabaseSeederService databaseSeederService;
 
     @Test
-    public void testfindBynameContaining(){
+    public void testfindBynameContaining() {
         String name = "rueba";
         List<MovieOutputDto> movieOutputDto = movieRepository.findBynameContaining(name).get();
         assertNotNull(movieOutputDto);
-        assertTrue(movieOutputDto.size()>0);
-        for (MovieOutputDto movie: movieOutputDto) {
-           assertTrue(Arrays.toString(movie.getName()).toLowerCase().contains(name));
+        assertTrue(movieOutputDto.size() > 0);
+        for (MovieOutputDto movie : movieOutputDto) {
+            assertTrue(Arrays.toString(movie.getName()).toLowerCase().contains(name));
         }
     }
 
     @Test
-    public void findBynameContainingPageable(){
-        String name = "prueba";
-        int size = 1;
-        int page=0;
-        List<MovieMinimumOutputDto> movieMinimumOutputDto = this.movieRepository.findBynameContaining(name, PageRequest.of(page,size)).get();
-        assertEquals(movieMinimumOutputDto.size(),1);
-        assertTrue(Arrays.toString(movieMinimumOutputDto.get(0).getName()).toLowerCase().contains(name));
-    }
-
-    @Test
-    public void findByFilters(){
+    public void findByFilters() {
 
         Movie movie = this.movieRepository.findById("0003").get();
-        movie.setReleaseDate(LocalDate.of(1970,02,02));
+        movie.setReleaseDate(LocalDate.of(1970, 02, 02));
         this.movieRepository.save(movie);
 
         String name = "prueba";
@@ -70,18 +61,45 @@ public class MovieIT {
         int maxRuntime = 200;
         String color = "true";
         String sound = "true";
-        LocalDate startDate = LocalDate.of(1960,2,3);
-        LocalDate endDate = LocalDate.of(2600,2,3);
+        LocalDate startDate = LocalDate.of(1960, 2, 3);
+        LocalDate endDate = LocalDate.of(2600, 2, 3);
 
         Page<MovieMinimumOutputDto> movies = this.movieRepository.findByfilters(
-                artMovement,genre,country,language,minRuntime,maxRuntime,color,sound,startDate,endDate,PageRequest.of(0,5));
+                artMovement, genre, country, language, minRuntime, maxRuntime, color, sound, startDate, endDate, PageRequest.of(0, 5));
 
         assertTrue(Arrays.toString(movies.getContent().get(0).getName()).contains(name));
 
     }
 
+    @Test
+    public void findBygenre() {
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository.findBygenre("asd", PageRequest.of(0, 3));
+        assertTrue(movieMinimumOutputDtoPage.getContent().size() <= 3);
+    }
+
+    @Test
+    public void getMinimunMoviesDtoByName() throws NotFoundException {
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository
+                .findBynameContaining("prueba", PageRequest.of(0, 2)).get();
+
+        movieMinimumOutputDtoPage.forEach(
+                movieMinimumOutputDto -> {
+                    assertTrue(Arrays.toString(movieMinimumOutputDto.getName()).contains("prueba"));
+                }
+        );
+    }
+
+    @Test
+    public void getRelatedByArtMovementAndGenre(){
+        System.out.println("------------------------------------start------------------------------------------------------");
+        Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage = this.movieRepository
+                .findRelatedByArtMovementAndGenre("9","French Impressionism","Drama",PageRequest.of(0,5));
+        movieMinimumOutputDtosPage.forEach(movieMinimumOutputDto -> System.out.println(Arrays.toString(movieMinimumOutputDto.getName())));
+    }
+
+
     @After
-    public void resetDB(){
+    public void resetDB() {
         this.databaseSeederService.resetDB();
     }
 

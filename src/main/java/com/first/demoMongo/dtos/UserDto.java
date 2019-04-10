@@ -16,10 +16,6 @@ public class UserDto {
     @NotEmpty
     private String email;
     @NotEmpty
-    private String dni;
-    @NotEmpty
-    private String address;
-    @NotEmpty
     private Boolean active;
 
     private Role[] roles;
@@ -31,21 +27,18 @@ public class UserDto {
     }
 
     // INPUT
-    public UserDto(String username, String password, String email, String dni, String address, Boolean active) {
+    public UserDto(String username, String password, String email, Boolean active) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.dni = dni;
-        this.address = address;
         this.active = active;
     }
 
     // OUTPUT
     public UserDto(User user) {
-        this(user.getUsername(),user.getPassword(),user.getEmail(),user.getDni(),user.getAddress(),user.isActive());
+        this(user.getUsername(),user.getPassword(),user.getEmail(),user.isActive());
         this.registrationDate = user.getRegistrationDate();
         this.setRoles(user.getRoles());
-
     }
 
     public void setUsername(String username) {
@@ -58,14 +51,6 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public void setActive(Boolean active) {
@@ -90,14 +75,6 @@ public class UserDto {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     public Boolean getActive() {

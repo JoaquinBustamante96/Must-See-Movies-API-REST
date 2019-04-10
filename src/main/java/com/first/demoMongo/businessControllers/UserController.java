@@ -17,7 +17,7 @@ public class UserController {
 
     public UserDto createUser(UserDto userDto, Role[] roles){
 
-        User user = new User(userDto.getUsername(),userDto.getPassword(),userDto.getDni(),userDto.getAddress(),userDto.getEmail());
+        User user = new User(userDto.getUsername(),userDto.getPassword(),userDto.getEmail());
         userRepository.save(user);
 
         return new UserDto(user);

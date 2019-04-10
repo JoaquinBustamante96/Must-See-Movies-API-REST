@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(UserResource.userMapping)
 public class UserResource {
 
@@ -21,6 +22,7 @@ public class UserResource {
     UserController userController;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public UserDto createUser(@RequestBody UserDto userDto){
 
         return userController.createUser(userDto,new Role[]{Role.USER});

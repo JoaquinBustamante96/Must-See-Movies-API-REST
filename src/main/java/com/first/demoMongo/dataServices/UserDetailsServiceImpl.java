@@ -29,21 +29,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String usernameOrTokenValue) {
         User user = userRepository.findByTokenValue(usernameOrTokenValue);
         if (user != null) {
-            return this.userBuilder(user.getUsername(), new BCryptPasswordEncoder().encode(P_TOKEN), user.getRoles(), user.isActive());
+            return this.userBuilder(user.getUsername(), new BCryptPasswordEncoder().encode(P_TOKEN),
+                    user.getRoles(),
+                    user.isActive(),
+                    !user.isTokenExpired()
+                    );
         } else {
             user = userRepository.findByusername(usernameOrTokenValue);
             if (user != null) {
                 return this.userBuilder(String.valueOf(user.getUsername()), user.getPassword(), new Role[]{Role.AUTHENTICATED},
-                        user.isActive());
+                        user.isActive(),true);
             } else {
                 throw new UsernameNotFoundException("Username-token not found. " + usernameOrTokenValue);
             }
         }
     }
 
-    private org.springframework.security.core.userdetails.User userBuilder(String mobile, String password, Role[] roles, boolean active) {
+    private org.springframework.security.core.userdetails.User userBuilder(String mobile,
+                                                                           String password,
+                                                                           Role[] roles,
+                                                                           boolean active,
+                                                                           boolean credentialsNonExpired) {
         boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
         boolean enabled = active;

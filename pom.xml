@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.movies.project</groupId>
-	<artifactId>demoMongo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>moviesMustSee</artifactId>
+	<version>0.9.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>moviesProject</name>
@@ -131,6 +131,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

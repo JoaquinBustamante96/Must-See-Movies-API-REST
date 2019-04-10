@@ -28,13 +28,6 @@ public class UserIT {
         assertEquals(user.getUsername(), username);
     }
 
-    @Test
-    public void findBydni(){
-        String dni = "33333";
-        User user = this.userRepository.findBydni(dni);
-        assertNotNull(user);
-        assertEquals(user.getDni(),dni);
-    }
 
     @Test
     public void findByemail(){

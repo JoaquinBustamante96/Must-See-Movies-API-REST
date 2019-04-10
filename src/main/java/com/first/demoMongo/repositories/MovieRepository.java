@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public interface MovieRepository extends MongoRepository<Movie, String> {
 
     @Query("{'name':{$regex:?0,$options:'i'}}")
-    Optional<List<MovieMinimumOutputDto>> findBynameContaining(String name, Pageable pageable);
+    Optional<Page<MovieMinimumOutputDto>> findBynameContaining(String name, Pageable pageable);
 
     @Query("{'name':{$regex:?0,$options:'i'}}")
     Optional<List<MovieOutputDto>> findBynameContaining(String name);
@@ -24,6 +24,11 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
     List<Movie> findDate(LocalDate start, LocalDate end);
 
     Page<MovieMinimumOutputDto> findByartMovement(String artMovement, Pageable pageable);
+
+    @Query("{$and:[ {'id':{ $not: {$regex:?0,$options:'i'} }}," +
+            "{$or: [ {'artMovement':{$regex:?1,$options:'i'}},{'genre':{$regex:?2,$options:'i'}} ]} " +
+            "]}")
+    Page<MovieMinimumOutputDto> findRelatedByArtMovementAndGenre(String id,String artMovement,String genre,Pageable pageable);
 
     @Query("{'genre':?0}")
     Page<MovieMinimumOutputDto> findBygenre(String genre, Pageable pageable);

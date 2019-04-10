@@ -1,5 +1,6 @@
 package com.first.demoMongo.documents;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,10 +26,6 @@ public class User {
 
     private String email;
 
-    private String dni;
-
-    private String address;
-
     private Role[] roles;
 
     private Token token;
@@ -38,18 +35,22 @@ public class User {
         this.active = true;
     }
 
-    public User(String username, String password, String dni, String address, String email) {
+    public User(String username, String password, String email) {
         this();
         this.username = username;
-        this.dni = dni;
-        this.address = address;
         this.email = email;
         this.setPassword(password);
         this.roles = new Role[]{Role.USER};
     }
 
     public User(String username, String password) {
-        this(username, password, null, null, null);
+        this(username, password, null);
+    }
+
+    public boolean isTokenExpired() {
+       DateTime creationDate = new DateTime(this.token.getCreationDate());
+       DateTime expirationDate = creationDate.plusDays(1);
+        return expirationDate.isBeforeNow();
     }
 
     public String getId() {
@@ -94,22 +95,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public Role[] getRoles() {
@@ -162,7 +147,7 @@ public class User {
             date = new SimpleDateFormat("dd-MMM-yyyy").format(registrationDate.getTime());
         }
         return "User username=" + username + ", password=" + password + ", active=" + active + ", email=" + email
-                + ", dni=" + dni + ", address=" + address + ", registrationDate=" + date + ", roles=" + java.util.Arrays.toString(roles)
+                + ", registrationDate=" + date + ", roles=" + java.util.Arrays.toString(roles)
                 + ", token=" + token + "]";
     }
 
