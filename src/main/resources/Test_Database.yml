@@ -177,7 +177,7 @@ movieList:
         imdb: https://www.imdb.com/title/tt0110632/?ref_=nv_sr_1
     poster: Natural Born killers.jpg
 userList:
-  - id: 0001;
+  - id: 0001
     username: usernameTest
     password: passwordTest
     active: True

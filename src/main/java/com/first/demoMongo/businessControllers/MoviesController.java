@@ -29,17 +29,17 @@ public class MoviesController {
         ));
     }
 
-    public Page<Movie> getPage(int page, int size, String key, Sort.Direction dir) {
-        return this.movieRepository.findAll(PageRequest.of(page, size, dir, key));
+    public Page<Movie> getPage(int page, int size, String key, Sort.Direction dir) throws NotFoundException{
+        Page<Movie> moviePage = this.movieRepository.findAll(PageRequest.of(page, size, dir, key));
+        if(moviePage.getSize()==0){
+            throw new NotFoundException("no movies found");
+        }
+        return moviePage;
     }
 
     public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(String name, int page, int size) throws NotFoundException {
-        Page<MovieMinimumOutputDto> movieMinimumOutputDtoPage = this.movieRepository.findBynameContaining(name, PageRequest.of(page, size))
+        return this.movieRepository.findBynameContaining(name, PageRequest.of(page, size))
                 .orElseThrow(() -> new NotFoundException("No Film Found With The Given name:" + name));
-        if (movieMinimumOutputDtoPage.getSize() == 0) {
-            throw new NotFoundException("No Film Found With The Given name:" + name);
-        }
-        return movieMinimumOutputDtoPage;
     }
 
 
@@ -67,20 +67,15 @@ public class MoviesController {
         Movie movie = this.movieRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No film found with the given Id: " + id));
 
-        Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage =
-                this.movieRepository
-                        .findRelatedByArtMovementAndGenre(
-                                id,
-                                movie.getArtMovement(),
-                                movie.getGenre()[0],
-                                PageRequest.of(page, size)
-                        );
-
-
-        return movieMinimumOutputDtosPage;
+        return this.movieRepository.findRelatedByArtMovementAndGenre(
+                id,
+                movie.getArtMovement(),
+                movie.getGenre()[0],
+                PageRequest.of(page, size)
+        );
     }
 
-    public Page<MovieMinimumOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto, int page, int size) throws NotFoundException {
+    public Page<MovieMinimumOutputDto> getMoviesByQueryDto(QueryMovieInputDto queryMovieInputDto, int page, int size) {
         Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage;
         if (queryMovieInputDto.getGenre().length == 0) {
             movieMinimumOutputDtosPage = this.movieRepository.findByfiltersExceptGenre(
@@ -117,7 +112,16 @@ public class MoviesController {
                 movieInputDto.getDirector(), movieInputDto.getCountry(),
                 movieInputDto.getLanguage(), movieInputDto.getReleaseDate()
                 , movieInputDto.getRuntime(), movieInputDto.getColor(), movieInputDto.getSound(),
-                movieInputDto.getPoster(), new MovieLinks(movieInputDto.getMovieLinks().getYoutubeId(), movieInputDto.getMovieLinks().getImdb()));
+                movieInputDto.getPoster());
+
+        if (movieInputDto.getMovieLinks() != null) {
+            if (movieInputDto.getMovieLinks().getYoutubeId() != null) {
+                movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
+            }
+            if (movieInputDto.getMovieLinks().getImdb() != null) {
+                movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getYoutubeId());
+            }
+        }
 
         this.movieRepository.save(movie);
 

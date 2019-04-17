@@ -33,7 +33,7 @@ public class Movie {
 
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
                  String[] director, String country, String language, LocalDate releaseDate,
-                 int runtime, String color, String sound, String poster,MovieLinks movieLinks) {
+                 int runtime, String color, String sound, String poster, MovieLinks movieLinks) {
         this.name = name;
         this.genre = genre;
         this.artMovement = artMovement;
@@ -47,6 +47,23 @@ public class Movie {
         this.sound = sound;
         this.poster = poster;
         this.movieLinks = movieLinks;
+    }
+
+    public Movie(String[] name, String[] genre, String storyline, String artMovement,
+                 String[] director, String country, String language, LocalDate releaseDate,
+                 int runtime, String color, String sound, String poster) {
+        this.name = name;
+        this.genre = genre;
+        this.artMovement = artMovement;
+        this.storyline = storyline;
+        this.director = director;
+        this.country = country;
+        this.language = language;
+        this.releaseDate = releaseDate;
+        this.runtime = runtime;
+        this.color = color;
+        this.sound = sound;
+        this.poster = poster;
     }
 
     public void setMovieLinks(MovieLinks movieLinks) {
@@ -168,11 +185,7 @@ public class Movie {
     }
 
     public boolean equals(String id) {
-        if (this.id.equals(id)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.id.equals(id);
     }
 
 }

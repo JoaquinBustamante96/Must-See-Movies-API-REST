@@ -15,7 +15,7 @@ public class MovieInputDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
     @NotNull @NotEmpty
-    private String artMovement;
+    private String artMovement = "";
     @NotNull @NotEmpty
     private  String[] genre;
     @NotNull @NotEmpty

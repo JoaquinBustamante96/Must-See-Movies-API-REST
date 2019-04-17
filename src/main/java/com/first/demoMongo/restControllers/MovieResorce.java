@@ -49,8 +49,7 @@ public class MovieResorce {
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public Page<Movie> getPage(@RequestParam @Min(0) @Max(1000) int page, @RequestParam @Min(0) @Max(100) int size,
-                               @RequestParam String key, @RequestParam @DirectionValidate String dir) throws BadRequestException {
-
+                               @RequestParam String key, @RequestParam @DirectionValidate String dir) throws NotFoundException {
         return this.moviesController.getPage(page, size, key, Sort.Direction.fromString(dir));
     }
 
@@ -65,8 +64,7 @@ public class MovieResorce {
     public Page<MovieMinimumOutputDto> getMoviesbyQueryDto
             (QueryMovieInputDto filters,
              @RequestParam @Min(0) @Max(1000) int page,
-             @RequestParam @Min(0)@Max(5) int size)
-            throws NotFoundException, BadRequestException {
+             @RequestParam @Min(0)@Max(5) int size) {
 
         return this.moviesController.getMoviesByQueryDto(filters, page, size);
     }
@@ -109,7 +107,7 @@ public class MovieResorce {
 
     @PutMapping(value = ID)
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateMovie(@PathVariable String id, @Valid @RequestBody MovieInputDto movieInputDto) throws MethodArgumentNotValidException, NotFoundException {
+    public void updateMovie(@PathVariable String id, @Valid @RequestBody MovieInputDto movieInputDto) throws NotFoundException {
         this.moviesController.updateMovie(id, movieInputDto);
     }
 
