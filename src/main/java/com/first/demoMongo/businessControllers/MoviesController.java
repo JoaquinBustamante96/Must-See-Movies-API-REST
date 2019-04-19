@@ -67,7 +67,7 @@ public class MoviesController {
         Movie movie = this.movieRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No film found with the given Id: " + id));
 
-        return this.movieRepository.findRelatedByArtMovementAndGenre(
+        return this.movieRepository.findRelatedByArtMovementOrGenre(
                 id,
                 movie.getArtMovement(),
                 movie.getGenre()[0],

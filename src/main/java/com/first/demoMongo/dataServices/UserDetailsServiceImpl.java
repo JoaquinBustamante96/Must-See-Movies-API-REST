@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public static final String P_TOKEN = "";
 
     @Autowired
+    private LoginAttemptService loginAttemptService;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(final String usernameOrTokenValue) {
+        String ip = getClientIP();
+        if (loginAttemptService.isBlocked(ip)) {
+            throw new RuntimeException("blocked");
+        }
         User user = userRepository.findByTokenValue(usernameOrTokenValue);
         if (user != null) {
             return this.userBuilder(user.getUsername(), new BCryptPasswordEncoder().encode(P_TOKEN),
@@ -53,12 +64,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean accountNonExpired = true;
         boolean accountNonLocked = true;
 
-        boolean enabled = active;
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.roleName()));
         }
-        return new org.springframework.security.core.userdetails.User(mobile, password, enabled, accountNonExpired, credentialsNonExpired,
+        return new org.springframework.security.core.userdetails.User(mobile, password, active, accountNonExpired, credentialsNonExpired,
                 accountNonLocked, authorities);
     }
+
+    private String getClientIP() {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null){
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
+    }
+
 }
