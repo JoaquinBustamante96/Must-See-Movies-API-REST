@@ -35,16 +35,12 @@ public class User {
         this.active = true;
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email,Role[] roles) {
         this();
         this.username = username;
         this.email = email;
         this.setPassword(password);
-        this.roles = new Role[]{Role.USER};
-    }
-
-    public User(String username, String password) {
-        this(username, password, null);
+        this.roles = roles;
     }
 
     public boolean isTokenExpired() {

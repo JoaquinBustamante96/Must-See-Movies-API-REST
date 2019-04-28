@@ -95,7 +95,7 @@ public class MovieResorce {
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    public MovieMinimumOutputDto createMovie(@RequestBody MovieInputDto movie) {
+    public MovieMinimumOutputDto createMovie(@RequestBody @Valid MovieInputDto movie) {
         return this.moviesController.createMovie(movie);
     }
 

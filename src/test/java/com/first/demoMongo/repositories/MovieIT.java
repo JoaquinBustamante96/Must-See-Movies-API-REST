@@ -56,6 +56,7 @@ public class MovieIT {
         String artMovement = "artmovement";
         String[] genre = {"genre1"};
         String country = "country";
+        String region = "EUROPA";
         String language = "language";
         int minRuntime = 100;
         int maxRuntime = 200;
@@ -65,7 +66,7 @@ public class MovieIT {
         LocalDate endDate = LocalDate.of(2600, 2, 3);
 
         Page<MovieMinimumOutputDto> movies = this.movieRepository.findByfilters(
-                artMovement, genre, country, language, minRuntime, maxRuntime, color, sound, startDate, endDate, PageRequest.of(0, 5));
+                artMovement, genre, country, region, language, minRuntime, maxRuntime, color, sound, startDate, endDate, PageRequest.of(0, 5));
 
         assertTrue(Arrays.toString(movies.getContent().get(0).getName()).contains(name));
 
@@ -90,10 +91,10 @@ public class MovieIT {
     }
 
     @Test
-    public void getRelatedByArtMovementAndGenre(){
+    public void getRelatedByArtMovementAndGenre() {
         System.out.println("------------------------------------start------------------------------------------------------");
         Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage = this.movieRepository
-                .findRelatedByArtMovementOrGenre("9","French Impressionism","Drama",PageRequest.of(0,5));
+                .findRelatedByArtMovementOrGenre("9", "French Impressionism", "Drama", PageRequest.of(0, 5));
         movieMinimumOutputDtosPage.forEach(movieMinimumOutputDto -> System.out.println(Arrays.toString(movieMinimumOutputDto.getName())));
     }
 

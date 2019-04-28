@@ -10,6 +10,7 @@ public class QueryMovieInputDto {
     private String artMovement = "";
     private String[] genre;
     private String country = "";
+    private String region = "";
     private String language = "";
     private String color = "";
     private String sound = "";
@@ -29,12 +30,13 @@ public class QueryMovieInputDto {
     public QueryMovieInputDto() {
     }
 
-    public QueryMovieInputDto( String artMovement, String[] genre, String country,
+    public QueryMovieInputDto(String artMovement, String[] genre, String country, String region,
                               String language, int minRuntime, int maxRuntime, String color,
                               String sound, int startYear, int endYear) {
         this.artMovement = artMovement;
         this.genre = genre;
         this.country = country;
+        this.region = region;
         this.language = language;
         this.minRuntime = minRuntime;
         this.maxRuntime = maxRuntime;
@@ -42,6 +44,10 @@ public class QueryMovieInputDto {
         this.sound = sound;
         this.startYear = startYear;
         this.endYear = endYear;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public void setArtMovement(String artMovement) {
@@ -88,6 +94,10 @@ public class QueryMovieInputDto {
         return artMovement;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
     public String[] getGenre() {
         return genre;
     }
@@ -117,12 +127,12 @@ public class QueryMovieInputDto {
     }
 
 
-    public LocalDate getStartYearAsLocalDate(){
-        return LocalDate.of(startYear,01,01);
+    public LocalDate getStartYearAsLocalDate() {
+        return LocalDate.of(startYear, 01, 01);
     }
 
-    public LocalDate getEndYearAsLocalDate(){
-        return LocalDate.of(endYear,01,01);
+    public LocalDate getEndYearAsLocalDate() {
+        return LocalDate.of(endYear, 01, 01);
     }
 
     @Override

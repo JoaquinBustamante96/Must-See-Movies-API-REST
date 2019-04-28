@@ -1,7 +1,6 @@
 package com.first.demoMongo;
 
 import com.first.demoMongo.businessControllers.AllbusinessControllesIntegrationTest;
-import com.first.demoMongo.documents.AllDocumentstest;
 import com.first.demoMongo.repositories.AllRepositoriesIntegrationTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 		AllRepositoriesIntegrationTest.class,
 		AllbusinessControllesIntegrationTest.class,
-		AllDocumentstest.class,
 })
 public class AllTest {
 

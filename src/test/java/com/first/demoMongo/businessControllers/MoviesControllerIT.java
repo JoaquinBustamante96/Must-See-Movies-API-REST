@@ -105,7 +105,7 @@ public class MoviesControllerIT {
         int endYear = 2600;
 
         QueryMovieInputDto queryMovieInputDto = new QueryMovieInputDto(
-                artMovement, genre, country, language, minRuntime,
+                artMovement, genre, country,"", language, minRuntime,
                 maxRuntime, color, sound, startYear, endYear);
 
         Page<MovieMinimumOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0, 5);

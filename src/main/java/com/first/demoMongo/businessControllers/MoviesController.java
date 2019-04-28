@@ -1,5 +1,6 @@
 package com.first.demoMongo.businessControllers;
 
+import com.first.demoMongo.businessServices.RegionService;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.documents.MovieLinks;
 import com.first.demoMongo.dtos.MovieInputDto;
@@ -22,6 +23,9 @@ public class MoviesController {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private RegionService regionService;
 
     public MovieOutputDto getMovieById(String id) throws NotFoundException {
         return new MovieOutputDto(this.movieRepository.findById(id).orElseThrow(
@@ -81,6 +85,7 @@ public class MoviesController {
             movieMinimumOutputDtosPage = this.movieRepository.findByfiltersExceptGenre(
                     queryMovieInputDto.getArtMovement(),
                     queryMovieInputDto.getCountry(),
+                    queryMovieInputDto.getRegion(),
                     queryMovieInputDto.getLanguage(),
                     queryMovieInputDto.getMinRuntime(),
                     queryMovieInputDto.getMaxRuntime(),
@@ -93,6 +98,7 @@ public class MoviesController {
                     queryMovieInputDto.getArtMovement(),
                     queryMovieInputDto.getGenre(),
                     queryMovieInputDto.getCountry(),
+                    queryMovieInputDto.getRegion(),
                     queryMovieInputDto.getLanguage(),
                     queryMovieInputDto.getMinRuntime(),
                     queryMovieInputDto.getMaxRuntime(),
@@ -110,6 +116,7 @@ public class MoviesController {
         Movie movie = new Movie(movieInputDto.getName(), movieInputDto.getGenre(),
                 movieInputDto.getStoryline(), movieInputDto.getArtMovement(),
                 movieInputDto.getDirector(), movieInputDto.getCountry(),
+                this.regionService.getCountryRegion(movieInputDto.getCountry()),
                 movieInputDto.getLanguage(), movieInputDto.getReleaseDate()
                 , movieInputDto.getRuntime(), movieInputDto.getColor(), movieInputDto.getSound(),
                 movieInputDto.getPoster());
@@ -145,6 +152,7 @@ public class MoviesController {
         movie.setColor(movieInputDto.getColor());
         movie.setSound(movieInputDto.getSound());
         movie.setCountry(movieInputDto.getCountry());
+        movie.setRegion(this.regionService.getCountryRegion(movieInputDto.getCountry()));
         movie.setGenre(movieInputDto.getGenre());
         movie.setLanguage(movieInputDto.getLanguage());
         movie.setRuntime(movieInputDto.getRuntime());
