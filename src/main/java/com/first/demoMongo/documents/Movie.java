@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Document
 public class Movie {
@@ -16,6 +17,7 @@ public class Movie {
     private String[] name;
     private String artMovement;
     private String[] genre;
+    private Region region;
     private String storyline;
     private String[] director;
     private String country;
@@ -32,7 +34,7 @@ public class Movie {
     }
 
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
-                 String[] director, String country, String language, LocalDate releaseDate,
+                 String[] director, String country,Region region, String language, LocalDate releaseDate,
                  int runtime, String color, String sound, String poster, MovieLinks movieLinks) {
         this.name = name;
         this.genre = genre;
@@ -40,6 +42,7 @@ public class Movie {
         this.storyline = storyline;
         this.director = director;
         this.country = country;
+        this.region = region;
         this.language = language;
         this.releaseDate = releaseDate;
         this.runtime = runtime;
@@ -49,8 +52,9 @@ public class Movie {
         this.movieLinks = movieLinks;
     }
 
+
     public Movie(String[] name, String[] genre, String storyline, String artMovement,
-                 String[] director, String country, String language, LocalDate releaseDate,
+                 String[] director, String country,Region region, String language, LocalDate releaseDate,
                  int runtime, String color, String sound, String poster) {
         this.name = name;
         this.genre = genre;
@@ -58,12 +62,21 @@ public class Movie {
         this.storyline = storyline;
         this.director = director;
         this.country = country;
+        this.region = region;
         this.language = language;
         this.releaseDate = releaseDate;
         this.runtime = runtime;
         this.color = color;
         this.sound = sound;
         this.poster = poster;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     public void setMovieLinks(MovieLinks movieLinks) {

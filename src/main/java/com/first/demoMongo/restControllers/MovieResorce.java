@@ -7,16 +7,13 @@ import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.dtos.validations.DirectionValidate;
-import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -62,10 +59,9 @@ public class MovieResorce {
     @GetMapping(FILTER)
     @PreAuthorize("permitAll()")
     public Page<MovieMinimumOutputDto> getMoviesbyQueryDto
-            (QueryMovieInputDto filters,
+            (@Valid QueryMovieInputDto filters,
              @RequestParam @Min(0) @Max(1000) int page,
              @RequestParam @Min(0)@Max(5) int size) {
-
         return this.moviesController.getMoviesByQueryDto(filters, page, size);
     }
 
@@ -77,7 +73,7 @@ public class MovieResorce {
 
     @GetMapping(RELATED + ID)
     @PreAuthorize("permitAll()")
-    public Page<MovieMinimumOutputDto> getRelatedMovies(@PathVariable String id, @RequestParam int page, @RequestParam int size) throws NotFoundException {
+    public Page<MovieMinimumOutputDto> getRelatedMovies(@PathVariable String id, @RequestParam @Min(0) @Max(100) int page, @RequestParam @Min(0) @Max(5) int size) throws NotFoundException {
         return this.moviesController.getRelatedMovies(id, page, size);
     }
 
@@ -89,13 +85,13 @@ public class MovieResorce {
 
     @PutMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    public void updatePoster(@RequestParam String id, @RequestBody MovieInputDto movie) throws NotFoundException {
+    public void updatePoster(@RequestParam String id, @RequestBody @Valid MovieInputDto movie) throws NotFoundException {
         this.moviesController.updateMovie(id, movie);
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    public MovieMinimumOutputDto createMovie(@RequestBody MovieInputDto movie) {
+    public MovieMinimumOutputDto createMovie(@RequestBody @Valid MovieInputDto movie) {
         return this.moviesController.createMovie(movie);
     }
 

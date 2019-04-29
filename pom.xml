@@ -42,8 +42,6 @@
 			<properties>
 				<logs.level>debug</logs.level>
 				<logs.path>logs/logFile.log</logs.path>
-				<database.user></database.user>
-				<database.password></database.password>
 			</properties>
 		</profile>
 	</profiles>
