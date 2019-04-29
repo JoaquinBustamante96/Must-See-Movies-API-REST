@@ -4,18 +4,19 @@ import com.first.demoMongo.documents.Role;
 import com.first.demoMongo.documents.User;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
 public class UserDto {
-    @NotEmpty
+    @NotNull @NotEmpty
     private String username;
-    @NotEmpty
+    @NotEmpty @NotNull
     private String password;
-    @NotEmpty
+    @NotEmpty @NotNull
     private String email;
-    @NotEmpty
+    @NotEmpty @NotNull
     private Boolean active;
 
     private Role[] roles;
