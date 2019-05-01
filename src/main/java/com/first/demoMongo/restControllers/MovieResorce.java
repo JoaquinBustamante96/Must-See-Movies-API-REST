@@ -86,6 +86,7 @@ public class MovieResorce {
     @PutMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public void updatePoster(@RequestParam String id, @RequestBody @Valid MovieInputDto movie) throws NotFoundException {
+        System.out.println(movie.getReleaseDate());
         this.moviesController.updateMovie(id, movie);
     }
 

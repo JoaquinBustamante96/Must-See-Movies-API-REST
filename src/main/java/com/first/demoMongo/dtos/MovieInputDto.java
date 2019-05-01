@@ -2,6 +2,8 @@ package com.first.demoMongo.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ public class MovieInputDto {
 
     @NotNull @NotEmpty
     private String[] name;
-    @NotNull @NotEmpty
+    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
     private String artMovement = "";
@@ -25,7 +27,8 @@ public class MovieInputDto {
     private String country;
     @NotNull @NotEmpty
     private String language;
-    @NotNull @NotEmpty
+    @Min(value = 0)
+    @Max(value = 600)
     private int runtime;
     @NotNull @NotEmpty
     private String color;

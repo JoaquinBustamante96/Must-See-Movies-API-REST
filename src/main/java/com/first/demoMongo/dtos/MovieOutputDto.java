@@ -13,6 +13,7 @@ import java.util.Arrays;
 public class MovieOutputDto extends MovieMinimumOutputDto {
 
     private String[] genre;
+    private String region;
     private String artMovement;
     private String language;
     private int runtime;
@@ -42,6 +43,10 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
         this(movie.getId(),movie.getName(),movie.getReleaseDate(),movie.getArtMovement(),movie.getGenre(),
                 movie.getStoryline(),movie.getDirector(),movie.getCountry(),movie.getLanguage(),
                 movie.getRuntime(),movie.getColor(),movie.getSound(),movie.getMovieLinks(),movie.getPoster());
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public void setRuntime(int runtime) {
@@ -90,6 +95,10 @@ public class MovieOutputDto extends MovieMinimumOutputDto {
 
     public String getSound() {
         return sound;
+    }
+
+    public String getRegion() {
+        return region;
     }
 
     public int getRuntime() {

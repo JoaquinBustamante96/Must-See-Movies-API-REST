@@ -27,9 +27,9 @@ public class DatabaseSeederService {
 
     @PostConstruct
     public void constructor(){
-        if(movieRepository.findAll().size()==0){
+       /* if(movieRepository.findAll().size()==0){
             this.initializeDB();
-        }
+        }*/
     }
 
     public void initializeDB() {
