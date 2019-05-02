@@ -33,9 +33,9 @@ public class MoviesController {
         ));
     }
 
-    public Page<Movie> getPage(int page, int size, String key, Sort.Direction dir) throws NotFoundException{
+    public Page<Movie> getPage(int page, int size, String key, Sort.Direction dir) throws NotFoundException {
         Page<Movie> moviePage = this.movieRepository.findAll(PageRequest.of(page, size, dir, key));
-        if(moviePage.getSize()==0){
+        if (moviePage.getSize() == 0) {
             throw new NotFoundException("no movies found");
         }
         return moviePage;
@@ -119,8 +119,7 @@ public class MoviesController {
                 this.regionService.getCountryRegion(movieInputDto.getCountry()),
                 movieInputDto.getLanguage(), movieInputDto.getReleaseDate()
                 , movieInputDto.getRuntime(), movieInputDto.getColor(), movieInputDto.getSound(),
-                movieInputDto.getPoster());
-
+                movieInputDto.getPoster(), new MovieLinks());
         if (movieInputDto.getMovieLinks() != null) {
             if (movieInputDto.getMovieLinks().getYoutubeId() != null) {
                 movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
@@ -157,11 +156,13 @@ public class MoviesController {
         movie.setLanguage(movieInputDto.getLanguage());
         movie.setRuntime(movieInputDto.getRuntime());
         movie.setReleaseDate(movieInputDto.getReleaseDate());
-        if (movie.getMovieLinks() == null) {
-            movie.setMovieLinks(new MovieLinks(movieInputDto.getMovieLinks().getYoutubeId(), movieInputDto.getMovieLinks().getImdb()));
-        } else {
-            movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
-            movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getImdb());
+        if (movieInputDto.getMovieLinks() != null) {
+            if (movieInputDto.getMovieLinks().getYoutubeId() != null) {
+                movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
+            }
+            if (movieInputDto.getMovieLinks().getImdb() != null) {
+                movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getYoutubeId());
+            }
         }
 
         movieRepository.save(movie);
