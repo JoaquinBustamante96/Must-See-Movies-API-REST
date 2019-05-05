@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -35,7 +36,7 @@ public class MoviesControllerIT {
     @Autowired
     private MovieRepository movieRepository;
 
-    @Before
+    /*@Before*/
     public void createMovieInputDto() {
         String[] array = new String[]{"first", "second"};
         this.movieInputDto = new MovieInputDto(array, LocalDate.of(1982, 3, 5), "artmovement", array,
@@ -105,7 +106,7 @@ public class MoviesControllerIT {
         int endYear = 2600;
 
         QueryMovieInputDto queryMovieInputDto = new QueryMovieInputDto(
-                artMovement, genre, country,"", language, minRuntime,
+                artMovement, genre, country, "", language, minRuntime,
                 maxRuntime, color, sound, startYear, endYear);
 
         Page<MovieMinimumOutputDto> movieMinimunOutputDtosPage = this.moviesController.getMoviesByQueryDto(queryMovieInputDto, 0, 5);
@@ -144,7 +145,7 @@ public class MoviesControllerIT {
         assertTrue(movieMinimumOutputDtos.getContent().size() <= 3);
     }
 
-    @After
+    /*    @After*/
     public void resetDB() {
         this.databaseSeederService.resetDB();
     }

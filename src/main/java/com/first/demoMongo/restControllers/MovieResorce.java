@@ -30,6 +30,7 @@ public class MovieResorce {
     public static final String NAME = "/{name}";
     public static final String BY_NAME = "/name";
     public static final String MOVIE = "/movie";
+    public static final String PAGE = "/page";
     public static final String FILTER = "/filter";
     public static final String POSTER = "/poster";
     public static final String RELATED = "/related";
@@ -52,8 +53,8 @@ public class MovieResorce {
 
     @GetMapping(value = FILTER + BY_NAME + NAME)
     @PreAuthorize("permitAll()")
-    public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(@PathVariable String name, int page, int size) throws NotFoundException{
-       return this.moviesController.getMinimunMoviesDtoByName(name,page,size);
+    public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(@PathVariable String name, int page, int size) throws NotFoundException {
+        return this.moviesController.getMinimunMoviesDtoByName(name, page, size);
     }
 
     @GetMapping(FILTER)
@@ -61,7 +62,7 @@ public class MovieResorce {
     public Page<MovieMinimumOutputDto> getMoviesbyQueryDto
             (@Valid QueryMovieInputDto filters,
              @RequestParam @Min(0) @Max(1000) int page,
-             @RequestParam @Min(0)@Max(5) int size) {
+             @RequestParam @Min(0) @Max(5) int size) {
         return this.moviesController.getMoviesByQueryDto(filters, page, size);
     }
 
@@ -83,10 +84,18 @@ public class MovieResorce {
         return this.moviesController.getMoviesByName(name);
     }
 
+    @GetMapping(PAGE)
+    @PreAuthorize("permitAll()")
+    public Page<MovieMinimumOutputDto> getMinimumMoviesPage(@RequestParam @Min(0) @Max(1000) int page,
+                                                            @RequestParam @Min(0) @Max(5) int size,
+                                                            @RequestParam @DirectionValidate String dir) {
+        return this.moviesController.getMinimumMoviesPage(page,size,Sort.Direction.fromString(dir));
+    }
+
+
     @PutMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public void updatePoster(@RequestParam String id, @RequestBody @Valid MovieInputDto movie) throws NotFoundException {
-        System.out.println(movie.getReleaseDate());
         this.moviesController.updateMovie(id, movie);
     }
 

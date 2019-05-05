@@ -44,6 +44,10 @@ public class MovieMinimumOutputDto {
         this.poster = movie.getPoster();
     }
 
+    static public MovieMinimumOutputDto MovieToDto(Movie movie){
+        return new MovieMinimumOutputDto(movie);
+    }
+
     public String getStoryline() {
         return storyline;
     }

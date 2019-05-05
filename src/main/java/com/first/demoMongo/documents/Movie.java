@@ -197,6 +197,27 @@ public class Movie {
         return this.id.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", name=" + Arrays.toString(name) +
+                ", artMovement='" + artMovement + '\'' +
+                ", genre=" + Arrays.toString(genre) +
+                ", region=" + region +
+                ", storyline='" + storyline + '\'' +
+                ", director=" + Arrays.toString(director) +
+                ", country='" + country + '\'' +
+                ", language='" + language + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", runtime=" + runtime +
+                ", color='" + color + '\'' +
+                ", sound='" + sound + '\'' +
+                ", poster='" + poster + '\'' +
+                ", movieLinks=" + movieLinks +
+                '}';
+    }
+
     public boolean equals(String id) {
         return this.id.equals(id);
     }
