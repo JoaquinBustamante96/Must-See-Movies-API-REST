@@ -3,6 +3,7 @@ package com.first.demoMongo.repositories;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -37,7 +38,7 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
             "{'artMovement':{$regex:?0,$options:'i'}}," +
             "{'genre':{ $all: ?1}}," +
             "{'country':{$regex:?2,$options:'i'}}," +
-            "{'region':{$regex:?3,$options:'i'}},"+
+            "{'region':{$regex:?3,$options:'i'}}," +
             "{'language':{$regex:?4,$options:'i'}}," +
             "{'runtime':{ $gt: ?5, $lt : ?6 }}, " +
             "{'color':{$regex:?7,$options:'i'}}," +

@@ -1,5 +1,6 @@
 package com.first.demoMongo.businessControllers;
 
+import com.fasterxml.jackson.databind.util.Converter;
 import com.first.demoMongo.businessServices.RegionService;
 import com.first.demoMongo.documents.Movie;
 import com.first.demoMongo.documents.MovieLinks;
@@ -9,6 +10,7 @@ import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +46,12 @@ public class MoviesController {
     public Page<MovieMinimumOutputDto> getMinimunMoviesDtoByName(String name, int page, int size) throws NotFoundException {
         return this.movieRepository.findBynameContaining(name, PageRequest.of(page, size))
                 .orElseThrow(() -> new NotFoundException("No Film Found With The Given name:" + name));
+    }
+
+    public Page<MovieMinimumOutputDto> getMinimumMoviesPage(int page, int size, Sort.Direction dir) {
+
+        Page<Movie> moviesPage = this.movieRepository.findAll(PageRequest.of(page, size, dir, "id"));
+        return moviesPage.map(MovieMinimumOutputDto::MovieToDto);
     }
 
 
@@ -125,7 +133,7 @@ public class MoviesController {
                 movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
             }
             if (movieInputDto.getMovieLinks().getImdb() != null) {
-                movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getYoutubeId());
+                movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getImdb());
             }
         }
 
@@ -161,7 +169,7 @@ public class MoviesController {
                 movie.getMovieLinks().setYoutubeId(movieInputDto.getMovieLinks().getYoutubeId());
             }
             if (movieInputDto.getMovieLinks().getImdb() != null) {
-                movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getYoutubeId());
+                movie.getMovieLinks().setImdb(movieInputDto.getMovieLinks().getImdb());
             }
         }
 
