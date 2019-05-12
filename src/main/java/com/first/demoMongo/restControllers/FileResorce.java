@@ -22,12 +22,6 @@ public class FileResorce {
     @Autowired
     S3Services s3Services;
 
-    @GetMapping(produces = MediaType.IMAGE_JPEG_VALUE, value = "/")
-    @PreAuthorize("permitAll()")
-    public byte[] downloadFile(@RequestParam() String id) throws IOException {
-        return s3Services.downloadFile(id).toByteArray();
-    }
-
     @PostMapping()
     public PosterDto uploadMultipartFile(@RequestParam @AllowedExtensions MultipartFile file)
             throws IOException {
