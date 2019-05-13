@@ -1,5 +1,6 @@
 package com.first.demoMongo.businessServices;
 
+import com.first.demoMongo.exceptions.MailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
@@ -52,6 +53,7 @@ public class MailService {
         try {
             mailSender.send(simpleMailMessage);
         } catch (Exception e) {
+            throw new MailException("Mail server unavailable");
         }
     }
 }
