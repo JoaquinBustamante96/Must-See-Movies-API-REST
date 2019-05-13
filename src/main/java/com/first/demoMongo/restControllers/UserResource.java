@@ -22,16 +22,14 @@ public class UserResource {
     UserController userController;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     public UserDto createUser(@RequestBody UserDto userDto){
-
         return userController.createUser(userDto,new Role[]{Role.USER});
     }
 
     @PreAuthorize("hasRole('AUTHENTICATED')")
     @PostMapping(UserResource.login)
     public TokenOutputDto login(@AuthenticationPrincipal User user){
-
         return userController.login(user.getUsername());
     }
 
