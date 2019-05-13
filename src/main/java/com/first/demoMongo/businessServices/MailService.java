@@ -12,7 +12,7 @@ public class MailService {
     // Login to Gmail
     // Access the URL as https://www.google.com/settings/security/lesssecureapps
     // Select "Turn on"
-    @Autowired
+
     private MailSender mailSender;
 
     @Value("${spring.mail.username}@gmail.com")

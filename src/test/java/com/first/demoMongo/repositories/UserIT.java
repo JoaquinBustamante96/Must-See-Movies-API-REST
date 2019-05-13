@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,6 +25,7 @@ public class UserIT {
     public void findByusername(){
         String username= "usernameTest";
         User user = this.userRepository.findByusername(username);
+        System.out.println( new BCryptPasswordEncoder().matches("passwordTest",user.getPassword()));
         assertNotNull(user);
         assertEquals(user.getUsername(), username);
     }
