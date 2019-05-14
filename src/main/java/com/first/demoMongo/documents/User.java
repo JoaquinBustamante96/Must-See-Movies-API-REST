@@ -113,9 +113,6 @@ public class User {
         this.id = id;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
 
     @Override
     public int hashCode() {
