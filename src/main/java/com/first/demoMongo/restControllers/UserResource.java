@@ -4,6 +4,7 @@ import com.first.demoMongo.businessControllers.UserController;
 import com.first.demoMongo.documents.Role;
 import com.first.demoMongo.dtos.TokenOutputDto;
 import com.first.demoMongo.dtos.UserDto;
+import com.first.demoMongo.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,19 +20,36 @@ public class UserResource {
     public static final String login = "/login";
 
     @Autowired
-    UserController userController;
+    private UserController userController;
 
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public UserDto createUser(@RequestBody UserDto userDto){
+    @PostMapping()
+    @PreAuthorize("permitAll()")
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userController.createUser(userDto, new Role[]{Role.USER});
+    }
 
-        return userController.createUser(userDto,new Role[]{Role.USER});
+    @PutMapping()
+    @PreAuthorize("hasRole('USER')")
+    public void resetPassword(
+            String email
+            , String oldPassword
+            , String newPassword
+            , String token) throws BadRequestException {
+        this.userController.resetPassword(email, oldPassword, newPassword, token);
+    }
+
+    @PutMapping("/s")
+    @PreAuthorize("permitAll()")
+    public TokenOutputDto resetForgottenPassword(
+            @RequestBody String email,
+            @RequestBody String newPassword,
+            @RequestBody String resetToken) throws BadRequestException{
+       return this.userController.resetForgottenPassword(email, newPassword, resetToken);
     }
 
     @PreAuthorize("hasRole('AUTHENTICATED')")
     @PostMapping(UserResource.login)
-    public TokenOutputDto login(@AuthenticationPrincipal User user){
-
+    public TokenOutputDto login(@AuthenticationPrincipal User user) {
         return userController.login(user.getUsername());
     }
 

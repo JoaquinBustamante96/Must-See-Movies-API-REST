@@ -24,6 +24,7 @@ public class User {
 
     private Boolean active;
 
+    @Indexed(unique = true)
     private String email;
 
     private Role[] roles;
@@ -113,9 +114,6 @@ public class User {
         this.id = id;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
 
     @Override
     public int hashCode() {
