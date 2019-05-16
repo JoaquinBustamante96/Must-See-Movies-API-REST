@@ -1,3 +1,6 @@
+tokenList:
+  - &to0
+    value: PaE8iPX3AekAaV945_ujcm7q1ik
 movieList:
   - id: 0001
     name: ['natural born killers', 'string2']
@@ -182,7 +185,8 @@ movieList:
         imdb: https://www.imdb.com/title/tt0110632/?ref_=nv_sr_1
     poster: Natural Born killers.jpg
 userList:
-  - id: 0001
+  - &user1
+    id: 0001
     username: usernameTest
     password: passwordTest
     active: True
@@ -190,3 +194,6 @@ userList:
     roles:
         - ADMIN
         - USER
+passwordResetTokenList:
+  - token: *to0
+    user: *user1

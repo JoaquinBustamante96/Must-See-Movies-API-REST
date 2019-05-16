@@ -24,6 +24,7 @@ public class User {
 
     private Boolean active;
 
+    @Indexed(unique = true)
     private String email;
 
     private Role[] roles;

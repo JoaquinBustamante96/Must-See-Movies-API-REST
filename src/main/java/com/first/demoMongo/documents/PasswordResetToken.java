@@ -2,6 +2,7 @@ package com.first.demoMongo.documents;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,6 +19,8 @@ public class PasswordResetToken {
     @DBRef
     private User user;
 
+    public PasswordResetToken(){}
+
     public PasswordResetToken(User user) {
         this.user = user;
         this.token = new Token();
@@ -33,6 +36,22 @@ public class PasswordResetToken {
 
     public User getUser() {
         return user;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void generateNewToken(){
+        this.token = new Token();
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isExpired() {
