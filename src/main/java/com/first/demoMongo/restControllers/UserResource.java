@@ -22,20 +22,29 @@ public class UserResource {
     @Autowired
     private UserController userController;
 
-    @PostMapping
+    @PostMapping()
     @PreAuthorize("permitAll()")
     public UserDto createUser(@RequestBody UserDto userDto) {
         return userController.createUser(userDto, new Role[]{Role.USER});
     }
 
-    @PutMapping
+    @PutMapping()
     @PreAuthorize("hasRole('USER')")
     public void resetPassword(
-            @RequestBody String userName
-            , @RequestBody String oldPassword
-            , @RequestBody String newPassword
-            , @RequestBody String token) throws BadRequestException {
-        this.userController.resetPassword(userName, oldPassword, newPassword, token);
+            String email
+            , String oldPassword
+            , String newPassword
+            , String token) throws BadRequestException {
+        this.userController.resetPassword(email, oldPassword, newPassword, token);
+    }
+
+    @PutMapping("/s")
+    @PreAuthorize("permitAll()")
+    public TokenOutputDto resetForgottenPassword(
+            @RequestBody String email,
+            @RequestBody String newPassword,
+            @RequestBody String resetToken) throws BadRequestException{
+       return this.userController.resetForgottenPassword(email, newPassword, resetToken);
     }
 
     @PreAuthorize("hasRole('AUTHENTICATED')")
