@@ -39,6 +39,9 @@ public class MovieLists {
         this.lists.get(name).add(id);
     }
 
+    public void removeMovieFromList(String name, String id) {
+        this.lists.get(name).remove(id);
+    }
     public boolean containsList(String name) {
         return this.lists.containsKey(name);
     }
