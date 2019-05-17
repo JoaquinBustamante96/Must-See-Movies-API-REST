@@ -21,10 +21,11 @@ public interface MovieRepository extends MongoRepository<Movie, String> {
     @Query("{'name':{$regex:?0,$options:'i'}}")
     Optional<List<MovieOutputDto>> findBynameContaining(String name);
 
+    @Query("{'id':{ $in: ?0 }}")
+    Page<MovieMinimumOutputDto> findPageOfIds(String[] Id, Pageable pageable);
+
     @Query("{'releaseDate': { $gte : ?0, $lt : ?1}}")
     List<Movie> findDate(LocalDate start, LocalDate end);
-
-    Page<MovieMinimumOutputDto> findByartMovement(String artMovement, Pageable pageable);
 
     @Query("{$and:[ {'id':{ $not: {$regex:?0,$options:'i'} }}," +
             "{$or: [ {'artMovement':{$regex:?1,$options:'i'}},{'genre':{$regex:?2,$options:'i'}} ]} " +

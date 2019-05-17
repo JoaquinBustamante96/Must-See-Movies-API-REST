@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -95,6 +96,14 @@ public class MovieIT {
         Page<MovieMinimumOutputDto> movieMinimumOutputDtosPage = this.movieRepository
                 .findRelatedByArtMovementOrGenre("9", "French Impressionism", "Drama", PageRequest.of(0, 5));
         movieMinimumOutputDtosPage.forEach(movieMinimumOutputDto -> System.out.println(Arrays.toString(movieMinimumOutputDto.getName())));
+    }
+
+    @Test
+    public void findPageOfIds() {
+        String[] ids = {"12", "13"};
+        this.movieRepository.findPageOfIds(ids, PageRequest.of(0, 3)).forEach(
+                value -> assertTrue(Arrays.toString(ids).contains(value.getId()))
+        );
     }
 
 

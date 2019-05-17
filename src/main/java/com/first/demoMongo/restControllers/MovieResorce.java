@@ -7,6 +7,7 @@ import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
 import com.first.demoMongo.dtos.validations.DirectionValidate;
+import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,13 @@ public class MovieResorce {
     @PreAuthorize("permitAll()")
     public MovieOutputDto getMovieById(@PathVariable String id) throws NotFoundException {
         return this.moviesController.getMovieById(id);
+    }
+
+    @GetMapping(PAGE + MovieListsResource.LIST)
+    @PreAuthorize("hasRole('USER')")
+    public Page<MovieMinimumOutputDto> getPageOfList(@RequestParam String list, @RequestParam String authToken,
+                                                     @RequestParam int page, @RequestParam int size) throws BadRequestException {
+        return this.moviesController.getPageOfList(list, authToken, page, size);
     }
 
     @GetMapping()
@@ -89,7 +97,7 @@ public class MovieResorce {
     public Page<MovieMinimumOutputDto> getMinimumMoviesPage(@RequestParam @Min(0) @Max(1000) int page,
                                                             @RequestParam @Min(0) @Max(5) int size,
                                                             @RequestParam @DirectionValidate String dir) {
-        return this.moviesController.getMinimumMoviesPage(page,size,Sort.Direction.fromString(dir));
+        return this.moviesController.getMinimumMoviesPage(page, size, Sort.Direction.fromString(dir));
     }
 
 
