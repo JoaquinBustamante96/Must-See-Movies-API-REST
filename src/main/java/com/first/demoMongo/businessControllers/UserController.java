@@ -65,4 +65,12 @@ public class UserController {
         return new TokenOutputDto(user);
     }
 
+    public String getUserId(String authToken) throws BadRequestException {
+        User user = this.userRepository.findByTokenValue(authToken);
+        if (user == null) {
+            throw new BadRequestException("Invalid Token");
+        }
+        return user.getId();
+    }
+
 }

@@ -8,6 +8,7 @@ import com.first.demoMongo.dtos.MovieInputDto;
 import com.first.demoMongo.dtos.MovieMinimumOutputDto;
 import com.first.demoMongo.dtos.MovieOutputDto;
 import com.first.demoMongo.dtos.QueryMovieInputDto;
+import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.exceptions.NotFoundException;
 import com.first.demoMongo.repositories.MovieRepository;
 import org.bson.types.ObjectId;
@@ -27,12 +28,20 @@ public class MoviesController {
     private MovieRepository movieRepository;
 
     @Autowired
+    private MovieListsController movieListsController;
+
+    @Autowired
     private RegionService regionService;
 
     public MovieOutputDto getMovieById(String id) throws NotFoundException {
         return new MovieOutputDto(this.movieRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("No Film Found With the given ID:" + id)
         ));
+    }
+
+    public Page<MovieMinimumOutputDto> getPageOfList(String list, String authToken, int page, int size) throws BadRequestException {
+        ArrayList<String> moviesId = this.movieListsController.getList(list, authToken);
+        return this.movieRepository.findPageOfIds(moviesId.toArray(new String[0]), PageRequest.of(page, size));
     }
 
     public Page<Movie> getPage(int page, int size, String key, Sort.Direction dir) throws NotFoundException {
