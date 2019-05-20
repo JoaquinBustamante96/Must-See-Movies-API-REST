@@ -1,12 +1,10 @@
 package com.first.demoMongo.businessControllers;
 
-import com.first.demoMongo.documents.PasswordResetToken;
-import com.first.demoMongo.documents.Role;
-import com.first.demoMongo.documents.Token;
-import com.first.demoMongo.documents.User;
+import com.first.demoMongo.documents.*;
 import com.first.demoMongo.dtos.TokenOutputDto;
 import com.first.demoMongo.dtos.UserDto;
 import com.first.demoMongo.exceptions.BadRequestException;
+import com.first.demoMongo.repositories.MovieListsRepository;
 import com.first.demoMongo.repositories.PasswordResetTokenRepository;
 import com.first.demoMongo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +16,21 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MovieListsRepository movieListsRepository;
 
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public UserDto createUser(UserDto userDto, Role[] roles) {
+    public UserDto createUser(UserDto userDto, Role[] roles) throws BadRequestException {
 
-        User user = new User(userDto.getUsername(), userDto.getPassword(), userDto.getEmail(), roles);
+        if (userRepository.findByemail(userDto.getEmail()) != null) {
+            throw new BadRequestException("email already in use");
+        }
+
+        User user = new User(userDto.getEmail(), userDto.getPassword(), roles);
         userRepository.save(user);
+        this.movieListsRepository.save(new MovieLists(user));
 
         return new UserDto(user);
     }
@@ -58,7 +63,7 @@ public class UserController {
 
     public TokenOutputDto login(String username) {
 
-        User user = userRepository.findByusername(username);
+        User user = userRepository.findByemail(username);
         user.setToken(new Token());
         userRepository.save(user);
 

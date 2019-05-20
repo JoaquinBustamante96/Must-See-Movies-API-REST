@@ -33,30 +33,30 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(final String usernameOrTokenValue) {
+    public UserDetails loadUserByUsername(final String emailOrTokenValue) {
         String ip = getClientIP();
         if (loginAttemptService.isBlocked(ip)) {
             throw new RuntimeException("blocked");
         }
-        User user = userRepository.findByTokenValue(usernameOrTokenValue);
+        User user = userRepository.findByTokenValue(emailOrTokenValue);
         if (user != null) {
-            return this.userBuilder(user.getUsername(), new BCryptPasswordEncoder().encode(P_TOKEN),
+            return this.userBuilder(user.getEmail(), new BCryptPasswordEncoder().encode(P_TOKEN),
                     user.getRoles(),
                     user.isActive(),
                     !user.isTokenExpired()
                     );
         } else {
-            user = userRepository.findByusername(usernameOrTokenValue);
+            user = userRepository.findByemail(emailOrTokenValue);
             if (user != null) {
-                return this.userBuilder(String.valueOf(user.getUsername()), user.getPassword(), new Role[]{Role.AUTHENTICATED},
+                return this.userBuilder(String.valueOf(user.getEmail()), user.getPassword(), new Role[]{Role.AUTHENTICATED},
                         user.isActive(),true);
             } else {
-                throw new UsernameNotFoundException("Username-token not found. " + usernameOrTokenValue);
+                throw new UsernameNotFoundException("Username-token not found. " + emailOrTokenValue);
             }
         }
     }
 
-    private org.springframework.security.core.userdetails.User userBuilder(String mobile,
+    private org.springframework.security.core.userdetails.User userBuilder(String email,
                                                                            String password,
                                                                            Role[] roles,
                                                                            boolean active,
@@ -68,7 +68,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.roleName()));
         }
-        return new org.springframework.security.core.userdetails.User(mobile, password, active, accountNonExpired, credentialsNonExpired,
+        return new org.springframework.security.core.userdetails.User(email, password, active, accountNonExpired, credentialsNonExpired,
                 accountNonLocked, authorities);
     }
 

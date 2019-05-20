@@ -36,6 +36,13 @@ public class User {
         this.active = true;
     }
 
+    public User(String email,String password,Role[] roles){
+        this();
+        this.email = email;
+        this.setPassword(password);
+        this.setRoles(roles);
+    }
+
     public User(String username, String password, String email,Role[] roles) {
         this();
         this.username = username;
