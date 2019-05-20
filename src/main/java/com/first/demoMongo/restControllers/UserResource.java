@@ -24,7 +24,7 @@ public class UserResource {
 
     @PostMapping()
     @PreAuthorize("permitAll()")
-    public UserDto createUser(@RequestBody UserDto userDto) {
+    public UserDto createUser(@RequestBody UserDto userDto) throws BadRequestException{
         return userController.createUser(userDto, new Role[]{Role.USER});
     }
 

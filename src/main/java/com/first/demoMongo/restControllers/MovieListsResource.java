@@ -7,9 +7,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @RestController
-@RequestMapping(MovieResorce.MOVIE + MovieListsResource.LIST)
+@RequestMapping(MovieListsResource.LIST)
 @PreAuthorize("hasRole('AUTHENTICATED')")
 public class MovieListsResource {
 
@@ -20,19 +21,25 @@ public class MovieListsResource {
 
     @GetMapping()
     @PreAuthorize("hasRole('USER')")
-    public ArrayList<String> getList(@RequestParam String name, @RequestParam String authToken) throws BadRequestException{
+    public ArrayList<String> getList(@RequestParam String name, @RequestParam String authToken) throws BadRequestException {
         return this.movieListsController.getList(name, authToken);
     }
 
-    @PutMapping()
+    @GetMapping(MovieResorce.MOVIE)
     @PreAuthorize("hasRole('USER')")
-    public void addMovieToList(@RequestParam String name, @RequestParam String id, @RequestParam String authToken) throws BadRequestException {
-        this.movieListsController.addMovieToList(name, id, authToken);
+    public Map<String, Boolean> isMovieInUserLists(@RequestParam String id, @RequestParam String authToken) throws BadRequestException {
+        return this.movieListsController.isMovieInUserLists(id, authToken);
     }
 
-    @DeleteMapping()
+    @PutMapping(MovieResorce.MOVIE)
     @PreAuthorize("hasRole('USER')")
-    public void removeMovieFromList(@RequestParam String name, @RequestParam String id, @RequestParam String authToken) throws BadRequestException {
-        this.movieListsController.removeMovieFromList(name, id, authToken);
+    public void addMovieToList(@RequestParam String list, @RequestParam String id, @RequestParam String authToken) throws BadRequestException {
+        this.movieListsController.addMovieToList(list, id, authToken);
+    }
+
+    @DeleteMapping(MovieResorce.MOVIE)
+    @PreAuthorize("hasRole('USER')")
+    public void removeMovieFromList(@RequestParam String list, @RequestParam String id, @RequestParam String authToken) throws BadRequestException {
+        this.movieListsController.removeMovieFromList(list, id, authToken);
     }
 }

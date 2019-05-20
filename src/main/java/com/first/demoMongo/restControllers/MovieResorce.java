@@ -45,7 +45,7 @@ public class MovieResorce {
         return this.moviesController.getMovieById(id);
     }
 
-    @GetMapping(PAGE + MovieListsResource.LIST)
+    @GetMapping(MovieListsResource.LIST)
     @PreAuthorize("hasRole('USER')")
     public Page<MovieMinimumOutputDto> getPageOfList(@RequestParam String list, @RequestParam String authToken,
                                                      @RequestParam int page, @RequestParam int size) throws BadRequestException {

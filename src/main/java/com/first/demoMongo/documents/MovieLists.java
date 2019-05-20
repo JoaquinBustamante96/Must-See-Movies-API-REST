@@ -1,9 +1,11 @@
 package com.first.demoMongo.documents;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +25,8 @@ public class MovieLists {
     public MovieLists(User user) {
         this.user = user;
         this.lists = new HashMap<>();
-        lists.put("watchlater", new ArrayList<String>());
-        lists.put("watched", new ArrayList<String>());
+        lists.put("Watch later", new ArrayList<String>());
+        lists.put("Watched", new ArrayList<String>());
     }
 
     public ArrayList<String> getList(String name) {
@@ -39,13 +41,34 @@ public class MovieLists {
         this.lists.get(name).add(id);
     }
 
+    public boolean isMovieInList(String name, String id) {
+        return this.lists.get(name).indexOf(id) != -1;
+    }
+
     public void removeMovieFromList(String name, String id) {
         this.lists.get(name).remove(id);
     }
+
     public boolean containsList(String name) {
         return this.lists.containsKey(name);
     }
 
+    public Map<String, Boolean> isMovieInLists(String id) {
+        Map<String, Boolean> isInList = new HashMap<>();
+        for (Map.Entry<String, ArrayList<String>> list : this.lists.entrySet()) {
+            isInList.put(list.getKey(),this.isMovieInList(list.getKey(),id));
+        }
+        return isInList;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieLists{" +
+                "id='" + id + '\'' +
+                ", user=" + user +
+                ", lists=" + lists +
+                '}';
+    }
 }
 
 

@@ -10,13 +10,12 @@ import java.util.Date;
 import java.util.Objects;
 
 public class UserDto {
-    @NotNull @NotEmpty
+
     private String username;
     @NotEmpty @NotNull
     private String password;
     @NotEmpty @NotNull
     private String email;
-    @NotEmpty @NotNull
     private Boolean active;
 
     private Role[] roles;
@@ -84,6 +83,18 @@ public class UserDto {
 
     public Role[] getRoles() {
         return roles;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", active=" + active +
+                ", roles=" + Arrays.toString(roles) +
+                ", registrationDate=" + registrationDate +
+                '}';
     }
 
     public Date getRegistrationDate() {
