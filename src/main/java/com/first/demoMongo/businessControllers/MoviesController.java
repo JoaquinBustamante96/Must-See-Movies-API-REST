@@ -39,8 +39,8 @@ public class MoviesController {
         ));
     }
 
-    public Page<MovieMinimumOutputDto> getPageOfList(String list, String authToken, int page, int size) throws BadRequestException {
-        ArrayList<String> moviesId = this.movieListsController.getList(list, authToken);
+    public Page<MovieMinimumOutputDto> getPageOfList(String list, int page, int size) throws BadRequestException {
+        ArrayList<String> moviesId = this.movieListsController.getList(list);
         return this.movieRepository.findPageOfIds(moviesId.toArray(new String[0]), PageRequest.of(page, size));
     }
 

@@ -70,10 +70,10 @@ public class UserController {
         return new TokenOutputDto(user);
     }
 
-    public String getUserId(String authToken) throws BadRequestException {
-        User user = this.userRepository.findByTokenValue(authToken);
+    public String getUserIdByEmail(String email) throws BadRequestException {
+        User user = this.userRepository.findByemail(email);
         if (user == null) {
-            throw new BadRequestException("Invalid Token");
+            throw new BadRequestException("Invalid email");
         }
         return user.getId();
     }

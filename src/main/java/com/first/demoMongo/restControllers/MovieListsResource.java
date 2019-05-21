@@ -21,25 +21,25 @@ public class MovieListsResource {
 
     @GetMapping()
     @PreAuthorize("hasRole('USER')")
-    public ArrayList<String> getList(@RequestParam String name, @RequestParam String authToken) throws BadRequestException {
-        return this.movieListsController.getList(name, authToken);
+    public ArrayList<String> getList(@RequestParam String name) throws BadRequestException {
+        return this.movieListsController.getList(name);
     }
 
     @GetMapping(MovieResorce.MOVIE)
     @PreAuthorize("hasRole('USER')")
-    public Map<String, Boolean> isMovieInUserLists(@RequestParam String id, @RequestParam String authToken) throws BadRequestException {
-        return this.movieListsController.isMovieInUserLists(id, authToken);
+    public Map<String, Boolean> isMovieInUserLists(@RequestParam String id) throws BadRequestException {
+        return this.movieListsController.isMovieInUserLists(id);
     }
 
     @PutMapping(MovieResorce.MOVIE)
     @PreAuthorize("hasRole('USER')")
-    public void addMovieToList(@RequestParam String list, @RequestParam String id, @RequestParam String authToken) throws BadRequestException {
-        this.movieListsController.addMovieToList(list, id, authToken);
+    public void addMovieToList(@RequestParam String list, @RequestParam String id) throws BadRequestException {
+        this.movieListsController.addMovieToList(list, id);
     }
 
     @DeleteMapping(MovieResorce.MOVIE)
     @PreAuthorize("hasRole('USER')")
-    public void removeMovieFromList(@RequestParam String list, @RequestParam String id, @RequestParam String authToken) throws BadRequestException {
-        this.movieListsController.removeMovieFromList(list, id, authToken);
+    public void removeMovieFromList(@RequestParam String list, @RequestParam String id) throws BadRequestException {
+        this.movieListsController.removeMovieFromList(list, id);
     }
 }

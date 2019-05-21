@@ -1,10 +1,9 @@
 package com.first.demoMongo.businessControllers;
 
+import com.first.demoMongo.businessServices.AuthenticatedUser;
 import com.first.demoMongo.documents.MovieLists;
-import com.first.demoMongo.documents.User;
 import com.first.demoMongo.exceptions.BadRequestException;
 import com.first.demoMongo.repositories.MovieListsRepository;
-import com.first.demoMongo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -17,28 +16,28 @@ public class MovieListsController {
     @Autowired
     private MovieListsRepository movieListsRepository;
     @Autowired
-    private UserController userController;
+    private AuthenticatedUser authenticatedUser;
 
-    public ArrayList<String> getList(String list, String authToken) throws BadRequestException {
-        MovieLists movieLists = getIfListExists(list, userController.getUserId(authToken));
+    public ArrayList<String> getList(String list) throws BadRequestException {
+        MovieLists movieLists = getIfListExists(list, authenticatedUser.getUserId());
         return movieLists.getList(list);
     }
 
-    public Map<String, Boolean> isMovieInUserLists(String id, String authToken) throws BadRequestException {
-        MovieLists movieLists = this.movieListsRepository.findListsByUserId(this.userController.getUserId(authToken));
+    public Map<String, Boolean> isMovieInUserLists(String id) throws BadRequestException {
+        MovieLists movieLists = this.movieListsRepository.findListsByUserId(this.authenticatedUser.getUserId());
         return movieLists.isMovieInLists(id);
     }
 
-    public void addMovieToList(String list, String id, String authToken) throws BadRequestException {
-        MovieLists movieLists = this.getIfListExists(list, userController.getUserId(authToken));
+    public void addMovieToList(String list, String id) throws BadRequestException {
+        MovieLists movieLists = this.getIfListExists(list, authenticatedUser.getUserId());
         if (!movieLists.isMovieInList(list, id)) {
             movieLists.addMovieToList(list, id);
             this.movieListsRepository.save(movieLists);
         }
     }
 
-    public void removeMovieFromList(String list, String id, String authToken) throws BadRequestException {
-        MovieLists movieLists = this.getIfListExists(list, userController.getUserId(authToken));
+    public void removeMovieFromList(String list, String id) throws BadRequestException {
+        MovieLists movieLists = this.getIfListExists(list, authenticatedUser.getUserId());
         movieLists.removeMovieFromList(list, id);
         this.movieListsRepository.save(movieLists);
     }

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,14 +44,15 @@ public class MovieResorce {
     @GetMapping(ID)
     @PreAuthorize("permitAll()")
     public MovieOutputDto getMovieById(@PathVariable String id) throws NotFoundException {
+
         return this.moviesController.getMovieById(id);
     }
 
     @GetMapping(MovieListsResource.LIST)
     @PreAuthorize("hasRole('USER')")
-    public Page<MovieMinimumOutputDto> getPageOfList(@RequestParam String list, @RequestParam String authToken,
+    public Page<MovieMinimumOutputDto> getPageOfList(@RequestParam String list,
                                                      @RequestParam int page, @RequestParam int size) throws BadRequestException {
-        return this.moviesController.getPageOfList(list, authToken, page, size);
+        return this.moviesController.getPageOfList(list, page, size);
     }
 
     @GetMapping()
