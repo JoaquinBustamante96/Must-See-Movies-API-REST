@@ -59,4 +59,13 @@ public class PasswordResetToken {
         DateTime expirationDate = creationDate.plusDays(1);
         return expirationDate.isBeforeNow();
     }
+
+    @Override
+    public String toString() {
+        return "PasswordResetToken{" +
+                "id='" + id + '\'' +
+                ", token=" + token +
+                ", user=" + user +
+                '}';
+    }
 }

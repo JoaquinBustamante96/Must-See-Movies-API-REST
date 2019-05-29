@@ -46,15 +46,11 @@ public class UserController {
         }
     }
 
-    public TokenOutputDto resetForgottenPassword(String email, String newPassword, String resetToken) throws BadRequestException {
-        User user = this.userRepository.findByemail(email);
-        if (user == null || !user.getEmail().equals(email)) {
-            throw new BadRequestException("Invalid email or token");
-        }
-        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findTokenByUserId(user.getId());
-
+    public TokenOutputDto resetForgottenPassword(String password, String resetToken) throws BadRequestException {
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository.findTokenByValue(resetToken);
+        User user = passwordResetToken.getUser();
         if (passwordResetToken.getToken().getValue().equals(resetToken)) {
-            user.setPassword(newPassword);
+            user.setPassword(password);
             return login(user.getUsername());
         } else {
             throw new BadRequestException("Invalid email or token");
