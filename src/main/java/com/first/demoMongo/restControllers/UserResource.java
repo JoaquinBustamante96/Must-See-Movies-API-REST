@@ -20,6 +20,8 @@ public class UserResource {
 
     public static final String userMapping = "/user";
     public static final String login = "/login";
+    public static final String reset = "/reset";
+    public static final String password = "/password";
 
     @Autowired
     private UserController userController;
@@ -40,13 +42,12 @@ public class UserResource {
         this.userController.resetPassword(email, oldPassword, newPassword, token);
     }
 
-    @PutMapping("/s")
+    @PutMapping(UserResource.reset+UserResource.password)
     @PreAuthorize("permitAll()")
     public TokenOutputDto resetForgottenPassword(
-            @RequestBody String email,
-            @RequestBody String newPassword,
+            @RequestBody String password,
             @RequestBody String resetToken) throws BadRequestException{
-       return this.userController.resetForgottenPassword(email, newPassword, resetToken);
+       return this.userController.resetForgottenPassword(password, resetToken);
     }
 
     @PreAuthorize("hasRole('AUTHENTICATED')")

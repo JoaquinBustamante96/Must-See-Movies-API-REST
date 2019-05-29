@@ -9,4 +9,7 @@ public interface PasswordResetTokenRepository extends MongoRepository<PasswordRe
     @Query("{'user.$id':?0}")
     PasswordResetToken findTokenByUserId(String id);
 
+    @Query("{'token.value': ?0 }")
+    PasswordResetToken findTokenByValue(String value);
+
 }

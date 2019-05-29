@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("permitAll()")
 public class PasswordResetTokenResource {
 
-    public static final String PASSWORD_RESET_TOKEN = "/reset";
+    public static final String PASSWORD_RESET_TOKEN = "/forgot-password";
 
     @Autowired
     private PasswordResetTokenController passwordResetTokenController;
