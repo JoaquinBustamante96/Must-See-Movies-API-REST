@@ -2,6 +2,7 @@ package com.first.demoMongo.restControllers;
 
 import com.first.demoMongo.businessControllers.UserController;
 import com.first.demoMongo.documents.Role;
+import com.first.demoMongo.dtos.ResetForgottenPasswordInputDto;
 import com.first.demoMongo.dtos.TokenOutputDto;
 import com.first.demoMongo.dtos.UserDto;
 import com.first.demoMongo.exceptions.BadRequestException;
@@ -45,9 +46,11 @@ public class UserResource {
     @PutMapping(UserResource.reset+UserResource.password)
     @PreAuthorize("permitAll()")
     public TokenOutputDto resetForgottenPassword(
-            @RequestBody String password,
-            @RequestBody String resetToken) throws BadRequestException{
-       return this.userController.resetForgottenPassword(password, resetToken);
+            @RequestBody ResetForgottenPasswordInputDto resetForgottenPasswordInputDto) throws BadRequestException{
+       return this.userController
+               .resetForgottenPassword(
+                       resetForgottenPasswordInputDto.getPassword(),
+                       resetForgottenPasswordInputDto.getResetToken());
     }
 
     @PreAuthorize("hasRole('AUTHENTICATED')")

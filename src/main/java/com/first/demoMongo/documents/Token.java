@@ -1,6 +1,7 @@
 package com.first.demoMongo.documents;
 
 import com.first.demoMongo.businessServices.Encrypting;
+import org.joda.time.DateTime;
 
 import java.util.Date;
 
@@ -21,6 +22,13 @@ public class Token {
     public void setValue(String value) {
         this.value = value;
         this.creationDate = new Date();
+    }
+
+
+    public boolean isTokenExpired() {
+        DateTime creationDate = new DateTime(this.getCreationDate());
+        DateTime expirationDate = creationDate.plusDays(1);
+        return expirationDate.isBeforeNow();
     }
 
     public Date getCreationDate() {
