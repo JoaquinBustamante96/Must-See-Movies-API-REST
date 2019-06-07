@@ -52,9 +52,7 @@ public class User {
     }
 
     public boolean isTokenExpired() {
-       DateTime creationDate = new DateTime(this.token.getCreationDate());
-       DateTime expirationDate = creationDate.plusDays(1);
-        return expirationDate.isBeforeNow();
+        return this.token.isTokenExpired();
     }
 
     public String getId() {

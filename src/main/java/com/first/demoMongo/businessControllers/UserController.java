@@ -48,13 +48,13 @@ public class UserController {
 
     public TokenOutputDto resetForgottenPassword(String password, String resetToken) throws BadRequestException {
         PasswordResetToken passwordResetToken = passwordResetTokenRepository.findTokenByValue(resetToken);
-        User user = passwordResetToken.getUser();
-        if (passwordResetToken.getToken().getValue().equals(resetToken)) {
-            user.setPassword(password);
-            return login(user.getUsername());
-        } else {
-            throw new BadRequestException("Invalid email or token");
+        if (passwordResetToken == null) {
+            throw new BadRequestException("invalid token");
         }
+        User user = passwordResetToken.getUser();
+        user.setPassword(password);
+        this.userRepository.save(user);
+        return login(user.getUsername());
     }
 
     public TokenOutputDto login(String username) {
