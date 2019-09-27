@@ -1,5 +1,5 @@
 # Must-See-Movies-API-REST
-A movie recommendation app. https://moviesmustsee.com
+A movie recommendation app back-end. https://moviesmustsee.com
 # Requirements 
 `Java 1.8.x` `Spring` `Mongodb` `Maven` `aws S3`
 # Architecture
